@@ -51,7 +51,7 @@ test.describe('slideshow playback', () => {
     await page.clock.install()
     await page.goto('/')
     await page.getByRole('button', { name: 'Open My Letter', exact: true }).click()
-    await page.clock.runFor(1500)
+    await page.clock.runFor(3000)
     await page.locator('.venue-gallery-stage').scrollIntoViewIfNeeded()
     await page.clock.runFor(1000)
     await page.clock.pauseAt(await page.evaluate(() => Date.now() + 1000))

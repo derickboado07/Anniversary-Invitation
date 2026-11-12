@@ -26,6 +26,8 @@ export const anniversary = {
     title: 'To my favorite person, Yen',
     subtitle: 'Something special, just for you.',
     button: 'Open My Letter',
+    instruction: 'Click the wax seal to open your letter.',
+    touchInstruction: 'Tap the wax seal to open your letter.',
     footnote: 'Made with all my love. Meant only for you.',
   },
   navigation: { home: 'Home', story: 'Our Story', date: 'The Date', letter: 'My Letter' },

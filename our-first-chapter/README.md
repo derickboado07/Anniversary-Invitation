@@ -33,6 +33,8 @@ Start with **`src/data/anniversary.ts`**. It holds the names, anniversary dates,
 - **Love letter:** edit `letter.greeting`, `letter.paragraphs`, `letter.signoff`, and `letter.signature`. Each item in `paragraphs` becomes a complete paragraph.
 - **Colors and typography:** begin with the shared styles in `src/styles/`. Fonts are bundled locally; the page does not need a Google Fonts request.
 
+The opening envelope fills the screen and opens when the visitor clicks or taps its **M & Y wax seal**. Keyboard visitors can use Enter or Space. Its opening sequence releases the seal, lifts a double-sided flap in perspective, and draws the letter out of the pocket; reduced-motion visitors see the invitation immediately. Customize the visible click/tap instructions in `opening.instruction` and `opening.touchInstruction`; `opening.button` is the seal's accessible action label. Its paper and wax use photorealistic generated image assets in `public/images/stationery/`, with responsive placement in `src/styles/envelope.css`. The visible initials are raised champagne-gold cursive lettering in the seal image. [Saved assets and generation prompts](./docs/stationery-assets.md) document the materials.
+
 This checkout uses the locally available **Newsreader** and **IBM Plex Sans** font families, with a system handwritten accent. Package downloads are restricted in this environment, so these bundled editorial alternatives keep the complete site usable offline. To use Cormorant Garamond, DM Sans, and Caveat instead, install their `@fontsource` packages, add their font imports in `src/main.tsx`, and replace the corresponding font-face and font-family declarations in `src/styles/global.css` and the section styles.
 
 ## Add your 12 photos

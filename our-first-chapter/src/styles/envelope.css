@@ -1,0 +1,345 @@
+/* Photographed paper on separate physical faces, hinged in a shared 3D scene. */
+.envelope-dialog {
+  --envelope-image: url('/images/stationery/envelope-landscape.webp');
+  --flap-shoulder-y: 4.3%;
+  --seal-y: 68.3%;
+  --seal-size: clamp(112px, 16vmin, 170px);
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: radial-gradient(ellipse at 50% 28%, #f0e8db, #d4c6b1);
+  color: #673c43;
+}
+
+.envelope-dialog::backdrop { background: #eee7d9; }
+.envelope-dialog .opening-inner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  padding: 0;
+  overflow: hidden;
+  text-align: center;
+  isolation: isolate;
+  perspective: 2200px;
+  perspective-origin: 50% 35%;
+}
+.envelope-dialog .envelope-stage {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform-origin: 50% 50%;
+  transform: translateY(0) rotateX(0deg) rotateZ(0deg) scale(1);
+}
+
+.envelope-dialog .envelope {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  filter: none;
+  perspective: none;
+  transform-style: preserve-3d;
+  background: #eee7d9 var(--envelope-image) 50% 0 / 300% 300% no-repeat;
+}
+
+/* Avoid drawn seams, grain overlays, or shadows over the photographed folds. */
+.envelope-dialog .envelope::before,
+.envelope-dialog .envelope::after,
+.envelope-dialog .envelope-pocket::after { content: none; }
+
+.envelope-dialog .envelope-pocket,
+.envelope-dialog .envelope-fold-left,
+.envelope-dialog .envelope-fold-right,
+.envelope-dialog .envelope-flap-front {
+  position: absolute;
+  inset: 0;
+  border-radius: 0;
+  filter: none;
+  background: transparent var(--envelope-image) center / 100% 100% no-repeat;
+}
+.envelope-dialog .envelope-pocket { z-index: 3; clip-path: polygon(0 var(--flap-shoulder-y), 50% var(--seal-y), 100% var(--flap-shoulder-y), 100% 100%, 0 100%); transform: translateZ(5px); }
+.envelope-dialog .envelope-fold-left { z-index: 3; clip-path: polygon(0 var(--flap-shoulder-y), 50% var(--seal-y), 0 100%); transform: translateZ(5.2px); pointer-events: none; }
+.envelope-dialog .envelope-fold-right { z-index: 3; clip-path: polygon(100% var(--flap-shoulder-y), 50% var(--seal-y), 100% 100%); transform: translateZ(5.2px); pointer-events: none; }
+.envelope-dialog .envelope-lining {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #6d615154, #89775d42 45%, #73604b70), var(--envelope-image) 50% 0 / 300% 300%;
+  box-shadow: inset 0 2px 10px #64452d40;
+  transform: translateZ(-2px);
+}
+.envelope-dialog .envelope-cavity-shadow {
+  position: absolute;
+  /* Shade the lining behind the sheet, so the letter keeps its ivory color. */
+  z-index: 0;
+  inset: 0;
+  clip-path: polygon(0 0, 100% 0, 100% var(--flap-shoulder-y), 50% var(--seal-y), 0 var(--flap-shoulder-y));
+  background: linear-gradient(180deg, #31291b59, #483b240a 44%, #493a2590 var(--seal-y));
+  opacity: 0;
+  transform: translateZ(-1px);
+  pointer-events: none;
+}
+.envelope-dialog .envelope-flap {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  border-radius: 0;
+  background: none;
+  clip-path: none;
+  transform: translateZ(7px) rotateX(0deg);
+  transform-origin: center top;
+  transform-style: preserve-3d;
+  backface-visibility: visible;
+  transition: none;
+}
+.envelope-dialog .envelope-flap-front,
+.envelope-dialog .envelope-flap-back {
+  position: absolute;
+  inset: 0;
+  clip-path: polygon(0 0, 100% 0, 100% var(--flap-shoulder-y), 50% var(--seal-y), 0 var(--flap-shoulder-y));
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.envelope-dialog .envelope-flap-front { transform: translateZ(.5px); }
+.envelope-dialog .envelope-flap-back {
+  background: linear-gradient(180deg, #bba68830, #fff7e52b 65%, #9d82602e), var(--envelope-image) 50% 0 / 300% 300%;
+  transform: rotateY(180deg) translateZ(.5px);
+}
+.envelope-dialog .envelope-flap-front::after,
+.envelope-dialog .envelope-flap-back::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #4f321300, #4f321357);
+  opacity: 0;
+  pointer-events: none;
+}
+.envelope-dialog .envelope-flap-back::after { background: linear-gradient(180deg, #64472738, #fffdf254 80%); }
+.envelope-dialog .envelope-rim {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #fdf7e7;
+  box-shadow: 0 2px 3px #62472a30;
+  opacity: 0;
+  transform: translateZ(6px);
+}
+
+.envelope-dialog .envelope-letter {
+  position: absolute;
+  z-index: 1;
+  inset: 8% 7% 5%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0;
+  padding: clamp(28px, 6vmin, 78px);
+  border: 1px solid #e2d7be;
+  border-radius: 1px;
+  overflow: hidden;
+  opacity: 1;
+  text-align: left;
+  color: #6b3c45;
+  transform: translate3d(0, 0, 0);
+  transform-origin: 50% 80%;
+  background: linear-gradient(#fffdf3ad, #fff9edb0), var(--envelope-image) 50% 0 / 300% 300%;
+  box-shadow: 2px 4px 0 #d8cbb6, 3px 7px 0 #eee3cf, 0 3px 15px #4d34252e;
+  transition: none;
+}
+.envelope-dialog .envelope-letter .envelope-letter-heart { position: static; flex-shrink: 0; width: 22px; margin-bottom: 25px; opacity: .7; }
+.envelope-dialog .envelope-letter-greeting { font-family: 'Newsreader Variable', Georgia, serif; font-style: italic; font-size: clamp(29px, 4.5vw, 64px); line-height: 1.2; }
+.envelope-dialog .envelope-letter-message { margin-top: 24px; max-width: 540px; font-family: 'Newsreader Variable', Georgia, serif; font-size: clamp(22px, 3vw, 39px); line-height: 1.45; }
+.envelope-dialog .envelope-letter-signoff { display: flex; flex-direction: column; gap: 2px; margin-top: 26px; font-size: clamp(12px, 1.2vw, 17px); line-height: 1.6; }
+.envelope-dialog .envelope-letter-signoff strong { font-size: clamp(28px, 3.3vw, 45px); }
+.envelope-dialog .envelope-letter .envelope-letter-rose { position: absolute; width: min(22vw, 230px); right: 4%; bottom: 4%; color: #a47070; opacity: .24; transform: rotate(12deg); }
+
+.envelope-dialog .opening-heading {
+  position: absolute;
+  z-index: 7;
+  top: 17%;
+  left: 50%;
+  width: min(780px, calc(100% - 48px));
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.envelope-dialog .opening-heading .eyebrow {
+  position: absolute;
+  top: -10dvh;
+  left: 0;
+  width: 100%;
+  color: #876c5e;
+  font-size: clamp(7px, .8vw, 10px);
+  line-height: 1.8;
+  letter-spacing: .24em;
+}
+.envelope-dialog .opening-heading h1 {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  color: #6b3c45;
+  font-family: 'Newsreader Variable', Georgia, serif;
+  font-size: clamp(34px, 4.8vw, 64px);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -.035em;
+  text-shadow: none;
+}
+.envelope-dialog .opening-subtitle { margin: 15px 0 0; color: #876c5e; font-size: clamp(11px, 1.2vw, 14px); line-height: 1.8; }
+
+.envelope-dialog .wax-seal {
+  position: absolute;
+  z-index: 9;
+  top: var(--seal-y);
+  left: 50%;
+  display: block;
+  width: var(--seal-size);
+  height: var(--seal-size);
+  min-width: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) translateZ(14px);
+  cursor: pointer;
+  color: #6b2235;
+  background: transparent url('/images/stationery/wax-seal-my-cursive.webp') center / contain no-repeat;
+  box-shadow: none;
+  filter: none;
+  transition: transform .25s ease, opacity .23s .1s;
+  touch-action: manipulation;
+}
+.envelope-dialog .wax-seal::before,
+.envelope-dialog .wax-seal::after { content: none; }
+/* The photograph contains raised champagne-gold cursive lettering. */
+.envelope-dialog .wax-seal-monogram,
+.envelope-dialog .wax-seal-heart { display: none; }
+.envelope-dialog .wax-seal:hover { transform: translate(-50%, -52%) translateZ(14px) scale(1.025); box-shadow: none; }
+.envelope-dialog .wax-seal:focus-visible { outline: 2px solid #6b2235; outline-offset: 7px; }
+.envelope-dialog .wax-seal:disabled { cursor: wait; }
+
+.envelope-dialog .opening-instruction {
+  position: absolute;
+  z-index: 7;
+  top: calc(var(--seal-y) + var(--seal-size) / 2 + 22px);
+  left: 50%;
+  width: min(380px, calc(100% - 48px));
+  margin: 0;
+  transform: translateX(-50%) translateZ(9px);
+  color: #765748;
+  font-size: clamp(11px, 1.15vw, 14px);
+  line-height: 1.7;
+  letter-spacing: .015em;
+  pointer-events: none;
+  text-shadow: none;
+}
+.envelope-dialog .seal-instruction-touch { display: none; }
+.envelope-dialog .envelope-bears { position: absolute; z-index: 7; left: 5%; right: auto; bottom: max(70px, calc(env(safe-area-inset-bottom, 0px) + 48px)); width: clamp(100px, 11vw, 145px); margin: 0; transform: rotate(-8deg) translateZ(9px); pointer-events: none; opacity: .93; }
+.envelope-dialog .envelope-addressee { position: absolute; z-index: 7; right: 6%; bottom: max(75px, calc(env(safe-area-inset-bottom, 0px) + 53px)); display: flex; flex-direction: column; align-items: flex-start; gap: 3px; color: #8b6359; transform: rotate(-4deg) translateZ(9px); pointer-events: none; }
+.envelope-dialog .envelope-addressee > small { font-size: 8px; letter-spacing: .23em; opacity: .75; }
+.envelope-dialog .envelope-addressee > span { font-size: clamp(30px, 3.5vw, 45px); line-height: 1.5; }
+.envelope-dialog .opening-footnote { position: absolute; z-index: 7; left: 16px; right: 16px; bottom: max(22px, calc(env(safe-area-inset-bottom, 0px) + 15px)); margin: 0; color: #876c5e; font-size: 10px; letter-spacing: .045em; line-height: 1.7; pointer-events: none; transform: translateZ(9px); }
+
+/* Seal lifts first; the flap then swings on its top crease before the sheet rises. */
+.envelope-dialog .opening-inner.is-opening .envelope-stage { animation: envelope-camera 2.5s .12s cubic-bezier(.22,.65,.26,1) both; }
+.envelope-dialog .opening-inner.is-opening .envelope { animation: envelope-depth 1.2s .12s ease both; }
+.envelope-dialog .opening-inner.is-opening .envelope-flap { z-index: 4; animation: envelope-hinge 1.3s .28s cubic-bezier(.34,.02,.24,1) both; }
+.envelope-dialog .opening-inner.is-opening .envelope-flap-front::after { animation: envelope-front-light 1.3s .28s ease both; }
+.envelope-dialog .opening-inner.is-opening .envelope-flap-back::after { animation: envelope-back-light 1.3s .28s ease both; }
+.envelope-dialog .opening-inner.is-opening .envelope-cavity-shadow { animation: envelope-inner-shadow 1.4s .28s ease both; }
+.envelope-dialog .opening-inner.is-opening .envelope-rim { animation: envelope-rim-reveal .6s .45s ease both; }
+.envelope-dialog .opening-inner.is-opening .envelope-letter { animation: envelope-extract .9s 1.6s cubic-bezier(.24,.6,.25,1) both; }
+.envelope-dialog .opening-inner.is-opening .wax-seal { animation: envelope-seal-release .42s ease-in both; pointer-events: none; }
+.envelope-dialog .opening-inner.is-opening .opening-instruction { animation: envelope-ink-fade .2s ease both; }
+
+@keyframes envelope-camera {
+  0% { transform: translateY(0) rotateX(0deg) rotateZ(0deg) scale(1); }
+  48% { transform: translateY(20dvh) rotateX(12deg) rotateZ(-1.2deg) scale(.54); }
+  80% { transform: translateY(20dvh) rotateX(12deg) rotateZ(-1.2deg) scale(.54); }
+  100% { transform: translateY(20dvh) rotateX(7deg) rotateZ(-.6deg) scale(.54); }
+}
+@keyframes envelope-depth { to { box-shadow: 0 3px 0 #c7bba5, 0 7px 0 #e2d7c3, 0 45px 65px #634b303b, 15px 15px 25px #634b3026; } }
+@keyframes envelope-hinge {
+  0% { transform: translateZ(7px) rotateX(0deg); }
+  58% { transform: translateZ(7px) rotateX(102deg); }
+  85% { transform: translateZ(-3px) rotateX(186deg); }
+  100% { transform: translateZ(-6px) rotateX(182deg); }
+}
+@keyframes envelope-front-light { 0% { opacity: 0; } 65%,100% { opacity: .75; } }
+@keyframes envelope-back-light { 0%,45% { opacity: .75; } 100% { opacity: .15; } }
+@keyframes envelope-inner-shadow { 0% { opacity: 0; } 45% { opacity: .8; } 100% { opacity: .45; } }
+@keyframes envelope-rim-reveal { to { opacity: 1; } }
+@keyframes envelope-extract {
+  0% { transform: translate3d(0, 0, 1px); box-shadow: 2px 4px 0 #d8cbb6, 3px 7px 0 #eee3cf, 0 3px 15px #4d34252e; }
+  42% { transform: translate3d(0, -32%, 2px); }
+  100% { transform: translate3d(0, -74%, 2px); box-shadow: 2px 4px 0 #d8cbb6, 3px 7px 0 #eee3cf, 0 9px 20px #4d34252e; }
+}
+@keyframes envelope-seal-release {
+  0% { opacity: 1; transform: translate(-50%, -50%) translateZ(14px) rotateZ(0deg) scale(1); }
+  40% { opacity: 1; transform: translate(-50%, -59%) translateZ(85px) rotateZ(-9deg) rotateY(-15deg) scale(1.06); }
+  100% { opacity: 0; transform: translate(-44%, -32%) translateZ(145px) rotateZ(15deg) rotateY(-32deg) scale(.92); }
+}
+@keyframes envelope-ink-fade { to { opacity: 0; } }
+
+@media (orientation: portrait) {
+  .envelope-dialog { --envelope-image: url('/images/stationery/envelope-portrait.webp'); --flap-shoulder-y: 36.3%; --seal-y: 62.6%; }
+}
+@media (max-width: 600px) {
+  .envelope-dialog { --seal-size: clamp(120px, 33vw, 138px); }
+  .envelope-dialog .opening-heading { width: calc(100% - 42px); }
+  .envelope-dialog .opening-heading h1 { max-width: 390px; margin-inline: auto; font-size: clamp(32px, 8.8vw, 43px); }
+  .envelope-dialog .opening-heading .eyebrow { font-size: 7px; letter-spacing: .19em; }
+  .envelope-dialog .opening-subtitle { margin-top: 12px; font-size: 11px; }
+  .envelope-dialog .opening-instruction { width: min(300px, calc(100% - 46px)); font-size: 12px; }
+  .envelope-dialog .envelope-bears { width: 100px; left: 5%; bottom: max(66px, calc(env(safe-area-inset-bottom, 0px) + 44px)); }
+  .envelope-dialog .envelope-addressee { right: 7%; bottom: max(73px, calc(env(safe-area-inset-bottom, 0px) + 51px)); }
+  .envelope-dialog .opening-footnote { font-size: 9px; }
+}
+@media (pointer: coarse) {
+  .envelope-dialog .seal-instruction-desktop { display: none; }
+  .envelope-dialog .seal-instruction-touch { display: inline; }
+}
+@media (max-height: 650px) and (orientation: portrait) {
+  .envelope-dialog .envelope-bears { width: 72px; bottom: 54px; }
+  .envelope-dialog .envelope-addressee { bottom: 48px; }
+  .envelope-dialog .envelope-addressee > span { font-size: 26px; }
+}
+@media (max-height: 500px) and (min-width: 500px) and (orientation: landscape) {
+  .envelope-dialog { --seal-size: 110px; --seal-y: 68.3%; }
+  .envelope-dialog .opening-heading { top: 16%; width: calc(100% - 64px); }
+  .envelope-dialog .opening-heading .eyebrow { top: -10dvh; font-size: 7px; }
+  .envelope-dialog .opening-heading h1 { max-width: none; font-size: clamp(27px, 4vw, 38px); line-height: 1.1; }
+  .envelope-dialog .opening-subtitle { display: none; }
+  .envelope-dialog .opening-instruction { top: calc(var(--seal-y) + var(--seal-size) / 2 + 18px); font-size: 11px; width: min(340px, calc(100% - 200px)); }
+  .envelope-dialog .envelope-bears { width: 82px; bottom: 22px; }
+  .envelope-dialog .envelope-addressee { bottom: 28px; }
+  .envelope-dialog .envelope-addressee > span { font-size: 28px; }
+  .envelope-dialog .opening-footnote { bottom: max(9px, env(safe-area-inset-bottom, 0px)); font-size: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .envelope-dialog .opening-inner.is-opening *,
+  .envelope-dialog .opening-inner.is-opening *::before,
+  .envelope-dialog .opening-inner.is-opening *::after { animation: none !important; transition: none; }
+  .envelope-dialog .wax-seal:hover { transform: translate(-50%, -50%) translateZ(14px); }
+  .envelope-dialog .opening-inner.is-opening .envelope-stage { transform: none; }
+  .envelope-dialog .opening-inner.is-opening .envelope-letter { transform: none; }
+}
