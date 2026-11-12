@@ -1,4 +1,4 @@
-export interface PhotoAsset { src: string; alt: string; position?: string }
+export interface PhotoAsset { src: string; alt: string; position?: string; format?: 'photostrip' }
 export interface Memory extends PhotoAsset { id: string; month: string; shortMonth: string; year: string; caption: string }
 export interface ItineraryEntry {
   id: string; period: string; time: string; place: string; title: string; description: string;
@@ -38,7 +38,8 @@ export const anniversary = {
     photoNote: 'you, me & a little forever',
     scroll: 'Keep scrolling, my love',
     cta: 'A little invitation for you',
-    photo: { src: '/images/us.jpg', alt: 'Maki and Yen together — October 2026', position: '50% 50%' } as PhotoAsset,
+    photo: { src: '/images/main-picture.png', alt: 'Maki and Yen with flowers in a four-photo booth strip', position: '50% 50%', format: 'photostrip' } as PhotoAsset,
+    backPhoto: { src: '/images/main-picture-2.png', alt: 'Maki and Yen sharing playful moments in a black-and-white photo-booth strip', format: 'photostrip' } as PhotoAsset,
     placeholder: 'A place for our favorite photo',
   },
   invitation: {

@@ -9,6 +9,8 @@ import { DuduBubuImage } from './DuduBubuImage'
 export function HeroSection() {
   const reduced = useReducedMotion()
   const [failed, setFailed] = useState(false)
+  const [backFailed, setBackFailed] = useState(false)
+  const hasBackPhoto = hasImage(data.hero.backPhoto.src) && !backFailed
   const date = new Date(`${data.anniversaryDate}T12:00:00+08:00`)
   const day = new Intl.DateTimeFormat('en', { day: '2-digit', timeZone: data.timeZone }).format(date)
   const month = new Intl.DateTimeFormat('en', { month: 'short', timeZone: data.timeZone }).format(date)
@@ -21,10 +23,12 @@ export function HeroSection() {
       <div className="hero-names"><span className="tiny-line"/><p>{data.names.together}</p><Heart size={14} fill="currentColor" strokeWidth={0}/></div>
       <p className="handwritten hero-note">{data.hero.note}</p>
     </motion.div>
-    <motion.div className="hero-art" initial={{ opacity: reduced ? 1 : 0, rotate: reduced ? 0 : -3, y: reduced ? 0 : 25 }} animate={{ opacity: 1, rotate: 0, y: 0 }} transition={{ duration: 1, delay: .18 }}>
+    <motion.div className={`hero-art${data.hero.photo.format === 'photostrip' ? ' hero-art-photostrip' : ''}${hasBackPhoto ? ' has-back-photo' : ''}`} initial={{ opacity: reduced ? 1 : 0, rotate: reduced ? 0 : -3, y: reduced ? 0 : 25 }} animate={{ opacity: 1, rotate: 0, y: 0 }} transition={{ duration: 1, delay: .18 }}>
       <div className="hero-orbit" aria-hidden="true"/>
       <span className="hero-art-spark" aria-hidden="true">✧</span>
-      <div className="back-paper"><span>{data.hero.occasion}</span><Heart size={36} strokeWidth={.7}/></div>
+      <div className={`back-paper${hasBackPhoto ? ' back-paper-photo' : ''}`}>
+        {hasBackPhoto ? <img src={data.hero.backPhoto.src} alt={data.hero.backPhoto.alt} width={724} height={2172} decoding="async" onError={() => setBackFailed(true)}/> : <><span>{data.hero.occasion}</span><Heart size={36} strokeWidth={.7}/></>}
+      </div>
       <figure className="hero-polaroid">
         <div className="photo-tape" aria-hidden="true"/>
         <div className="hero-photo">

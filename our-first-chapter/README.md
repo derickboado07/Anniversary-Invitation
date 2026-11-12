@@ -37,7 +37,7 @@ This checkout uses the locally available **Newsreader** and **IBM Plex Sans** fo
 
 ## Add your 12 photos
 
-The supplied photos from `Monthly Image/` are now connected to all 12 gallery cards. Copies use the filenames below, and the October 2026 photo is also the featured image at `public/images/us.jpg`. Your original files are preserved. The supplied `Augsut 2025.jpeg` file is mapped to the August 2026 card; replace `public/images/memories/aug-2026.jpg` if you intended a different photo there.
+The supplied photos from `Monthly Image/` are now connected to all 12 gallery cards. Copies use the filenames below. The featured hero uses the supplied `main picture.png` photo-booth strip, copied to `public/images/main-picture.png`, with `main picture 2.png` copied to `public/images/main-picture-2.png` in the overlapping frame behind it. Edit `hero.photo` and `hero.backPhoto` in the central data file to replace either print. Your original files are preserved. The supplied `Augsut 2025.jpeg` file is mapped to the August 2026 card; replace `public/images/memories/aug-2026.jpg` if you intended a different photo there.
 
 Copy your photos into **`public/images/memories/`** with these exact filenames:
 
@@ -56,7 +56,7 @@ Copy your photos into **`public/images/memories/`** with these exact filenames:
 | September 2026 | `sep-2026.jpg` |
 | October 2026 | `oct-2026.jpg` |
 
-Use **`public/images/us.jpg`** for the featured hero photo. If a photo is missing or cannot load, an original illustrated placeholder appears. Photos are never replaced with random stock images. **Restart the dev server after adding or renaming image files**, and rebuild before deployment: available images are discovered when Vite starts/builds so missing placeholders do not cause broken network requests.
+Use **`public/images/main-picture.png`** for the featured hero photo. Its `hero.photo.format: 'photostrip'` setting in the central data file keeps the full vertical strip visible; remove that setting to restore the standard photo frame. If a photo is missing or cannot load, an original illustrated placeholder appears. Photos are never replaced with random stock images. **Restart the dev server after adding or renaming image files**, and rebuild before deployment: available images are discovered when Vite starts/builds so missing placeholders do not cause broken network requests.
 
 Resize your photos before uploading: roughly 1200–1600 pixels on the longest side is usually plenty. Aim for a few hundred KB each. Export real JPG files rather than renaming HEIC files to `.jpg`.
 
