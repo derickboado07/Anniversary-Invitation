@@ -2,7 +2,7 @@
 
 The website prepares Yen's email directly from `src/data/anniversary.ts`, including every itinerary stop, the date, and the planning note. No times or venues are invented. The full itinerary appears **inside the email**, so no attachment or paid attachment feature is needed.
 
-The template matches the website's burgundy, blush, ivory, and champagne palette. It opens with a personal greeting and thank-you, then shows the celebration date, four numbered itinerary cards, and Maki's signature. Text, date, and itinerary content stay synchronized with the central configuration.
+The template matches the website's burgundy, blush, ivory, and champagne palette. It opens with a personal greeting and thank-you, then shows the celebration date, one dinner card with the venue photo and requested dress code, and Maki's signature. Text, date, and itinerary content stay synchronized with the central configuration. After updating the template file, paste its updated HTML into EmailJS to include the new photo and dress-code fields in live messages.
 
 Delivery requires your own connected email service. Until the setup below is complete, accepting the invitation still works, but the website must not claim an email was sent.
 

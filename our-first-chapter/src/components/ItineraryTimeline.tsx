@@ -1,31 +1,45 @@
-import { useRef, useState } from 'react'
-import { motion, useReducedMotion, useScroll } from 'motion/react'
-import { Compass, Heart, MapPin, Moon, Sunrise, Utensils } from 'lucide-react'
+import { motion, useReducedMotion } from 'motion/react'
+import { ArrowUpRight, CalendarHeart, Clock3, Heart, MapPin, Sparkles, Utensils } from 'lucide-react'
 import { anniversary as data } from '../data/anniversary'
-import type { PhotoAsset } from '../data/anniversary'
-import { hasImage } from '../lib/images'
 import { isValidMapsUrl } from '../lib/maps'
 import { RevealText } from './RevealText'
+import { VenueGallery } from './VenueGallery'
+import { DressCodeGuide } from './DressCodeGuide'
+import '../styles/dining.css'
 
 export { isValidMapsUrl } from '../lib/maps'
 
-const icons = { sunrise: Sunrise, utensils: Utensils, compass: Compass, moon: Moon }
-function OptionalPhoto({ asset }: { asset: PhotoAsset }) {
-  const [failed, setFailed] = useState(false)
-  return hasImage(asset.src) && !failed ? <img className="itinerary-photo" src={asset.src} alt={asset.alt} loading="lazy" style={{ objectPosition: asset.position }} onError={() => setFailed(true)}/> : null
-}
 export function ItineraryTimeline() {
-  const ref = useRef<HTMLDivElement>(null)
   const reduced = useReducedMotion()
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 80%', 'end 65%'] })
-  return <section id="itinerary" className="itinerary section-shell" aria-labelledby="itinerary-title">
-    <div className="section-intro"><p className="eyebrow">{data.itinerary.eyebrow}</p><RevealText id="itinerary-title" className="section-heading">{data.itinerary.title}</RevealText><p>{data.itinerary.subtitle}</p></div>
-    <div className="itinerary-date"><Heart size={14}/><span>{data.celebrationLabel}</span></div>
-    <div ref={ref} className="itinerary-list"><div className="itinerary-track" aria-hidden="true"><motion.div style={{ scaleY: reduced ? 1 : scrollYProgress }}/></div>
-      {data.itinerary.entries.map((entry, index) => {const Icon = icons[entry.icon]; return <motion.article key={entry.id} className="itinerary-row" initial={{ opacity: reduced ? 1 : 0, y: reduced ? 0 : 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .15 }} transition={{ duration: .5 }}>
-        <div className="itinerary-time"><span>{entry.period}</span><small>{entry.time}</small></div><div className="itinerary-icon"><Icon size={22} strokeWidth={1.3}/></div>
-        <div className="itinerary-card"><span className="chapter-number">0{index + 1}</span><p className="itinerary-place">{entry.place}</p><h3>{entry.title}</h3><p>{entry.description}</p>{entry.image && <OptionalPhoto asset={entry.image}/>} {isValidMapsUrl(entry.mapsUrl) && <a className="maps-link" href={entry.mapsUrl} target="_blank" rel="noopener noreferrer"><MapPin size={14}/>{data.itinerary.mapsLabel}<span className="sr-only"> (opens a new tab)</span></a>}</div>
-      </motion.article>})}
-    </div><p className="itinerary-note handwritten">{data.itinerary.note}</p>
+  return <section id="itinerary" className="itinerary section-shell dining-experience" aria-labelledby="itinerary-title">
+    <div className="dining-heading">
+      <p className="eyebrow"><span/>{data.itinerary.eyebrow}<span/></p>
+      <RevealText id="itinerary-title" className="section-heading">{data.itinerary.title}</RevealText>
+      <p>{data.itinerary.subtitle}</p>
+    </div>
+    {data.itinerary.entries.map(entry => <motion.article key={entry.id} className="itinerary-row dining-booking" aria-labelledby={'dining-title-' + entry.id} initial={reduced ? false : { opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .12 }} transition={{ duration: .65 }}>
+      <div className="dining-preview">
+        <div className="dining-preview-heading"><span><Utensils size={14} aria-hidden="true"/>THE SETTING</span><span>City lights. Good company.</span></div>
+        <VenueGallery images={entry.gallery || (entry.image ? [entry.image] : [])} intervalMs={5000}/>
+      </div>
+      <div className="dining-reservation">
+        <div className="dining-ticket-heading"><span className="dining-ticket-monogram">M <i>&</i> Y</span><span className="dining-ticket-status"><span/>Reservation booked</span></div>
+        <p className="dining-ticket-eyebrow">OUR ANNIVERSARY DINNER</p>
+        <h3 id={'dining-title-' + entry.id}>{entry.title}</h3>
+        <p className="dining-ticket-place"><MapPin size={15} aria-hidden="true"/>{entry.place}</p>
+        <div className="dining-ticket-details">
+          <div><CalendarHeart size={17} aria-hidden="true"/><span>THE DATE<strong>{data.celebrationLabel}</strong></span></div>
+          <div><Clock3 size={17} aria-hidden="true"/><span>OUR TABLE IS WAITING<strong>{entry.time}</strong></span></div>
+        </div>
+        <p className="dining-ticket-description">{entry.description}</p>
+        {isValidMapsUrl(entry.mapsUrl) && <a className="dining-directions" href={entry.mapsUrl} target="_blank" rel="noopener noreferrer">{data.itinerary.mapsLabel}<ArrowUpRight size={15} aria-hidden="true"/><span className="sr-only"> (opens a new tab)</span></a>}
+        <p className="dining-ticket-signature handwritten">a table for two. always you.<Heart size={13} aria-hidden="true"/></p>
+      </div>
+      {entry.dressCode && <section className="dining-attire" aria-labelledby={'dress-code-title-' + entry.id}>
+        <div className="dining-attire-heading"><div><p className="eyebrow"><Sparkles size={12} aria-hidden="true"/>LET'S DRESS UP A LITTLE</p><h3 id={'dress-code-title-' + entry.id}>A little style inspiration</h3></div><p>{entry.dressCode}<span>Choose the look that feels most like you.</span></p></div>
+        {entry.attireOptions && <DressCodeGuide options={entry.attireOptions}/>}
+      </section>}
+    </motion.article>)}
+    <p className="itinerary-note dining-note handwritten"><Heart size={17} strokeWidth={1} aria-hidden="true"/>{data.itinerary.note}</p>
   </section>
 }

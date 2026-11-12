@@ -1,6 +1,12 @@
 import { anniversary } from '../data/anniversary'
 import { isValidMapsUrl } from './maps'
 
+export interface ItineraryEmailAttireExample {
+  label: string
+  example: string
+  detail: string
+}
+
 export interface ItineraryEmailStop {
   number: string
   period: string
@@ -9,6 +15,12 @@ export interface ItineraryEmailStop {
   title: string
   description: string
   maps_url: string
+  dress_code?: string
+  attire_examples?: ItineraryEmailAttireExample[]
+  image_url?: string
+  image_alt?: string
+  image_source_url?: string
+  image_source_label?: string
 }
 
 /** No recipient email address or visitor information is sent by the website. */
@@ -57,6 +69,18 @@ function filenamePart(value: string): string {
     .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 }
 
+function publicImageUrl(value?: string): string {
+  if (!value) return ''
+  try {
+    const url = new URL(value)
+    const host = url.hostname.toLowerCase().replace(/\.$/, '')
+    const local = host === 'localhost' || !host.includes('.')
+      || /\.(localhost|local|internal|test|invalid|example)$/.test(host)
+      || /^[\d.]+$/.test(host) || host.includes(':')
+    return url.protocol === 'https:' && !url.username && !url.password && !local ? url.href : ''
+  } catch { return '' }
+}
+
 /** Both the email and the local download use the exact same central itinerary. */
 export function createItineraryEmail(): {
   parameters: ItineraryEmailParameters
@@ -90,6 +114,16 @@ export function createItineraryEmail(): {
       title: entry.title,
       description: entry.description,
       maps_url: isValidMapsUrl(entry.mapsUrl) ? entry.mapsUrl! : '',
+      dress_code: entry.dressCode || '',
+      attire_examples: (entry.attireOptions || []).map(option => ({
+        label: option.label,
+        example: option.example,
+        detail: option.detail,
+      })),
+      image_url: publicImageUrl(entry.image?.emailSrc),
+      image_alt: entry.image?.alt || '',
+      image_source_url: publicImageUrl(entry.image?.sourceUrl),
+      image_source_label: entry.image?.sourceLabel || '',
     })),
     closing: data.email.closing,
     signature: data.email.signature,
@@ -101,6 +135,10 @@ export function createItineraryEmail(): {
     `${entry.period} · ${entry.time}`,
     entry.place,
     entry.description,
+    ...(entry.dress_code ? [`Dress code: ${entry.dress_code}`] : []),
+    ...(entry.attire_examples || []).flatMap(option => [`${option.label}: ${option.example}`, option.detail]),
+    ...(entry.image_url ? [`Venue photo: ${entry.image_url}`] : []),
+    ...(entry.image_source_url ? [`${entry.image_source_label || 'Photo source'} — ${entry.image_source_url}`] : []),
     ...(entry.maps_url ? [entry.maps_url] : []),
     '',
   ])

@@ -96,7 +96,13 @@ Edit **`itinerary.entries`** in the same data file. Every entry has:
 }
 ```
 
-Icons available: `sunrise`, `utensils`, `compass`, and `moon`. Leave `mapsUrl` absent until you have a real Google Maps link. The Maps button only appears for a valid configured Maps URL. The initial entries are editable ideas, not confirmed venues, reservations, or precise times.
+Icons available: `sunrise`, `utensils`, `compass`, and `moon`. Leave `mapsUrl` absent until you have a real Google Maps link. The Maps button only appears for a valid configured Maps URL. The itinerary contains only the booked **6:00 PM anniversary dinner at The Nest Dining in the Sky, Vivere Hotel, Alabang, on November 22, 2026**, with its Maps search link. Its `dressCode` is the requested attire for the couple's evening: a dress, formal attire, or smart semi-formal attire. The venue photo comes from [Vivere Hotel's official website](https://viverehotel.com.ph/stories/the-nest-rooftop-dining-alabang-manila/), with a credited local copy in `public/images/venues/`. Edit the entry's `image` fields to replace the photo or its credit.
+
+After changing the plan, run `npm run email:preview` to regenerate `email/email-preview.txt`, `email/email-preview.html`, `email/email-preview.png`, and `email/email-preview-mobile.png` from the same itinerary. Preview generation does not send an email.
+
+The dinner section's `gallery` uses the four supplied `The nest 1/2/3/4.webp` photos from `Monthly Image/`, with local copies in `public/images/venues/`. Photos crossfade every five seconds while the gallery is in view; visitors can choose a thumbnail, use the arrows, or pause. Playback also pauses during hover, keyboard focus, and hidden tabs. Reduced-motion visitors start with a still image and can navigate manually. Portrait photos keep their full framing against a soft background.
+
+Edit the dinner entry's `attireOptions` to customize the illustrated Dress, Formal, and Semi-formal examples. The same category names, example outfits, and details appear in the email and TXT download.
 
 ## Dudu and Bubu artwork
 
@@ -149,7 +155,7 @@ To edit the illustrated link preview, change `public/social-card.svg`, then run 
 
 `npm test` runs the Playwright interaction checks against a local Vite server. The configuration uses installed Google Chrome at its standard Windows path. Set the `CHROME_PATH` environment variable to your Chrome executable on another system. A browser is only needed for tests; the website and production build have no browser installation requirement.
 
-`npm run test:email` checks the configured email workflow against a separate local server using dummy public IDs and intercepted API responses. It checks full itinerary content, duplicate prevention on refresh, uncertain responses, reset during a request, and downloads. **No test emails are delivered.**
+`npm run test:email` checks the configured email workflow against its own local server on port 5184 (override with `EMAIL_TEST_PORT`), using dummy public IDs and intercepted API responses. It never reuses an ordinary preview server, whose email settings may differ. It checks full itinerary content, duplicate prevention on refresh, uncertain responses, reset during a request, and downloads. **No test emails are delivered.**
 
 ## Replay while customizing
 
@@ -161,7 +167,7 @@ An explicit `/?reset=1` URL also resets the invitation once in the browser where
 
 The email implementation and HTML template are ready; delivery requires connecting your own sender and configuring a fixed recipient in EmailJS. Follow [EMAIL_SETUP.md](./EMAIL_SETUP.md) and copy `.env.example` to an ignored `.env.local`. Do not put email passwords or private keys in the website.
 
-Once configured in production, clicking Yes saves the answer and requests one itinerary email to the template's recipient. The email and the **Save our itinerary** text download use the same central data, including all four stops and any remaining planning notes. Edit `email` and `itinerary.entries` in `src/data/anniversary.ts` before sharing.
+Once configured in production, clicking Yes saves the answer and requests one itinerary email to the template's recipient. The email and the **Save our itinerary** text download use the same central data, including the single dinner booking, dress code, and venue photo reference. The sent HTML email uses the photo's public HTTPS `emailSrc`, while local previews embed the local image so they work offline. Edit `email` and `itinerary.entries` in `src/data/anniversary.ts` before sharing.
 
 Local rehearsals do not send by default, even when public EmailJS IDs are set. A deliberate development send requires `VITE_EMAIL_SEND_IN_PREVIEW=true`. The accepted state accurately distinguishes preview, pending, acknowledged, unavailable, and uncertain delivery. Refreshing an accepted invitation does not automatically request another copy. A lost response asks the visitor to check their inbox before manually retrying.
 

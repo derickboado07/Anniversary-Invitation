@@ -80,6 +80,25 @@
                       <h3 style="margin:15px 0 9px;color:#6B2235;font-family:'Cormorant Garamond','Newsreader',Georgia,serif;font-size:26px;font-weight:normal;letter-spacing:-.3px;line-height:1.25;">{{title}}</h3>
                       <p style="margin:0 0 10px;color:#77545F;font-size:12px;line-height:1.8;">{{place}}</p>
                       <p style="margin:0;color:#5F4853;font-size:14px;line-height:1.8;white-space:pre-line;">{{description}}</p>
+                      {{#image_url}}
+                      <p style="margin:18px 0 0;"><img src="{{image_url}}" alt="{{image_alt}}" width="480" style="display:block;width:100%;max-width:480px;height:auto;border:0;border-radius:5px;"></p>
+                      {{#image_source_url}}
+                      <p style="margin:7px 0 0;color:#8D6C73;font-size:10px;line-height:1.6;"><a href="{{image_source_url}}" target="_blank" rel="noopener noreferrer" style="color:#8D6C73;text-decoration:underline;">{{image_source_label}}</a></p>
+                      {{/image_source_url}}
+                      {{/image_url}}
+                      {{#dress_code}}
+                      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#F7DDE4" style="width:100%;margin-top:18px;border:1px solid #E4C0C7;border-radius:5px;background-color:#F7DDE4;">
+                        <tr><td style="padding:15px 16px;">
+                          <p style="margin:0 0 6px;color:#813B4B;font-size:9px;letter-spacing:1.5px;line-height:1.8;">DRESS CODE</p>
+                          <p style="margin:0;color:#6B2235;font-size:13px;line-height:1.8;">{{dress_code}}</p>
+                          {{#attire_examples}}
+                          <p style="margin:15px 0 5px;padding-top:13px;border-top:1px solid #E4C0C7;color:#6B2235;font-family:Georgia,serif;font-size:18px;line-height:1.4;">{{label}}</p>
+                          <p style="margin:0;color:#62434C;font-size:12px;line-height:1.8;">{{example}}</p>
+                          <p style="margin:6px 0 0;color:#82616A;font-size:11px;line-height:1.8;">{{detail}}</p>
+                          {{/attire_examples}}
+                        </td></tr>
+                      </table>
+                      {{/dress_code}}
                       {{#maps_url}}
                       <p style="margin:15px 0 0;font-size:12px;line-height:1.8;"><a href="{{maps_url}}" target="_blank" rel="noopener noreferrer" style="display:inline-block;padding:6px 0;color:#6B2235;text-decoration:underline;text-underline-offset:3px;">{{maps_label}}</a></p>
                       {{/maps_url}}

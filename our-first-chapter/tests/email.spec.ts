@@ -1,10 +1,20 @@
 import { expect, test, type Page } from 'playwright/test'
 import { readFile } from 'node:fs/promises'
+import type { ItineraryEmailStop } from '../src/lib/itineraryEmailContent'
 
 const endpoint = 'https://api.emailjs.com/api/v1.0/email/send'
 const success = 'Your itinerary is on its way. Please check your inbox and spam folder.'
 const uncertain = "I couldn't confirm the email copy. Please check your inbox before trying again."
 const storageKey = 'maki-yen-first-anniversary-accepted'
+const dinnerVenue = 'The Nest Dining in the Sky · Vivere Hotel, Alabang'
+const dinnerMapsUrl = 'https://www.google.com/maps/search/?api=1&query=The+Nest+Dining+in+the+Sky+Vivere+Hotel+Alabang'
+const planningNote = 'Our anniversary dinner is booked for 6:00 PM. Just you, me, and a beautiful evening together.'
+const dressCode = 'A dress, formal attire, or smart semi-formal attire.'
+const attireExamples = [
+  { label: 'Dress', example: 'A midi or maxi dress with heels or dressy flats.' },
+  { label: 'Formal', example: 'A tailored suit or an elegant evening dress.' },
+  { label: 'Semi-formal', example: 'A blazer with tailored trousers, or a blouse with a skirt.' },
+]
 
 // Every external email call is intercepted. These tests never deliver email.
 test.beforeEach(async ({ page }) => {
@@ -45,11 +55,17 @@ test('Yes requests the full itinerary once while acceptance is immediate', async
   expect(parameters.site_url).toBe('')
   expect(parameters).not.toHaveProperty('to_email')
   expect(parameters).not.toHaveProperty('user_email')
-  const stops = parameters.itinerary as Record<string, string>[]
-  expect(stops.map(stop => stop.title)).toEqual(['Surprise Stop #1', 'Our Food Date', 'A Little Adventure', 'Our Final Surprise'])
-  expect(stops.map(stop => stop.number)).toEqual(['01', '02', '03', '04'])
-  expect(stops.every(stop => stop.time === 'Time to be announced' && stop.maps_url === '')).toBeTruthy()
-  expect(parameters.planning_note).toBe('A little mystery for now. The details are still being dreamed up.')
+  const stops = parameters.itinerary as ItineraryEmailStop[]
+  expect(stops.map(stop => stop.title)).toEqual(['Anniversary Dinner in the Sky'])
+  expect(stops.map(stop => stop.number)).toEqual(['01'])
+  expect(stops[0]).toMatchObject({ period: 'Evening', time: '6:00 PM', place: dinnerVenue, maps_url: dinnerMapsUrl, dress_code: dressCode, image_source_label: 'Photo: Vivere Hotel' })
+  expect(stops[0].image_url).toMatch(/^https:\/\//)
+  expect(stops[0].image_source_url).toMatch(/^https:\/\//)
+  expect(stops[0].image_alt).toBeTruthy()
+  expect(stops[0].attire_examples).toMatchObject(attireExamples)
+  expect(stops[0].attire_examples?.every(option => option.detail.trim().length > 0)).toBeTruthy()
+  expect(JSON.stringify(stops)).not.toMatch(/Time to be announced|Surprise Stop #1|Our Food Date|A Little Adventure/)
+  expect(parameters.planning_note).toBe(planningNote)
   release()
   await expect(page.getByText(success, { exact: true })).toBeVisible()
   expect(payloads).toHaveLength(1)
@@ -135,8 +151,17 @@ test('the saved itinerary contains the same complete schedule without exposing l
   expect(text).toContain('Sunday, November 22, 2026')
   expect(text).toContain('My dearest Yen,')
   expect(text).toContain('Thank you for saying yes to our special anniversary date.')
-  for (const title of ['Surprise Stop #1', 'Our Food Date', 'A Little Adventure', 'Our Final Surprise']) expect(text).toContain(title)
-  expect(text.match(/Time to be announced/g)).toHaveLength(4)
+  expect(text).toContain('1. Anniversary Dinner in the Sky')
+  expect(text.match(/^\d+\. /gm)).toHaveLength(1)
+  expect(text).not.toMatch(/Time to be announced|Surprise Stop #1|Our Food Date|A Little Adventure|\/images\/venues\//)
+  expect(text).toContain('Evening · 6:00 PM')
+  expect(text).toContain(dinnerVenue)
+  expect(text).toContain(dinnerMapsUrl)
+  expect(text).toContain(planningNote)
+  expect(text).toContain(`Dress code: ${dressCode}`)
+  for (const option of attireExamples) expect(text).toContain(`${option.label}: ${option.example}`)
+  expect(text).toMatch(/Venue photo: https:\/\//)
+  expect(text).toMatch(/Photo: Vivere Hotel — https:\/\//)
   expect(text).not.toMatch(/localhost|127\.0\.0\.1|reset=1/)
   expect(text).toContain('Love, Maki.')
 })

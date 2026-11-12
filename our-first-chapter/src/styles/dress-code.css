@@ -1,0 +1,97 @@
+.dress-code-guide {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 17px;
+  margin-top: 25px;
+}
+
+.attire-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #e7d5cc;
+  border-radius: 16px;
+  background: #fffdf9;
+  box-shadow: 0 8px 28px #6b223506;
+}
+
+.attire-card-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 210px;
+  padding: 9px 15px 0;
+  background: radial-gradient(ellipse at 50% 70%, #f1ded7 0, #fbf1e9 64%, #fff8f0 100%);
+  border-bottom: 1px solid #e7d5cc80;
+}
+
+.attire-card--formal .attire-card-art {
+  background: radial-gradient(ellipse at 50% 70%, #e6dce0 0, #f5edf0 65%, #fff8f4 100%);
+}
+
+.attire-card--semi-formal .attire-card-art {
+  background: radial-gradient(ellipse at 50% 70%, #ecdfd2 0, #f8f0e7 65%, #fff8f0 100%);
+}
+
+.attire-illustration {
+  display: block;
+  width: 175px;
+  max-width: 100%;
+  height: 201px;
+}
+
+.attire-card-copy { padding: 23px 23px 25px; }
+
+.attire-card .attire-card-label {
+  margin: 0 0 13px;
+  color: #6b2235;
+  font-family: 'Newsreader Variable', Georgia, serif;
+  font-size: 29px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -.02em;
+}
+
+.attire-card-example {
+  margin: 0;
+  color: #62434c;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.attire-card-detail {
+  margin: 12px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid #eaded6;
+  color: #887078;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+@media (max-width: 760px) {
+  .dress-code-guide { gap: 12px; }
+  .attire-card-art { height: 175px; padding-inline: 9px; }
+  .attire-illustration { width: 145px; height: 167px; }
+  .attire-card-copy { padding: 20px 16px; }
+  .attire-card .attire-card-label { font-size: 26px; }
+  .attire-card-example { font-size: 12px; }
+}
+
+@media (max-width: 600px) {
+  .dress-code-guide { grid-template-columns: 1fr; gap: 14px; }
+  .attire-card { display: grid; grid-template-columns: minmax(94px, 30%) minmax(0, 1fr); }
+  .attire-card-art { height: 100%; min-height: 219px; padding: 12px 5px; border-bottom: 0; border-right: 1px solid #e7d5cc80; }
+  .attire-illustration { width: 135px; height: auto; }
+  .attire-card-copy { padding: 22px 19px; }
+  .attire-card .attire-card-label { font-size: 27px; margin-bottom: 10px; }
+  .attire-card-detail { font-size: 11px; margin-top: 10px; padding-top: 10px; }
+}
+
+@media (max-width: 350px) {
+  .attire-card { grid-template-columns: 82px minmax(0, 1fr); }
+  .attire-card-copy { padding: 20px 15px; }
+  .attire-card .attire-card-label { font-size: 25px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .attire-card { transform: none !important; }
+}

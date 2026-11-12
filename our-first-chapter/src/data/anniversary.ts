@@ -1,8 +1,9 @@
-export interface PhotoAsset { src: string; alt: string; position?: string; format?: 'photostrip' }
+export interface PhotoAsset { src: string; alt: string; position?: string; format?: 'photostrip'; emailSrc?: string; sourceUrl?: string; sourceLabel?: string; caption?: string; fit?: 'cover' | 'contain' }
+export interface AttireOption { id: 'dress' | 'formal' | 'semi-formal'; label: string; example: string; detail: string }
 export interface Memory extends PhotoAsset { id: string; month: string; shortMonth: string; year: string; caption: string }
 export interface ItineraryEntry {
   id: string; period: string; time: string; place: string; title: string; description: string;
-  icon: 'sunrise' | 'utensils' | 'compass' | 'moon'; image?: PhotoAsset; mapsUrl?: string;
+  icon: 'sunrise' | 'utensils' | 'compass' | 'moon'; image?: PhotoAsset; gallery?: PhotoAsset[]; mapsUrl?: string; dressCode?: string; attireOptions?: AttireOption[];
 }
 
 // Make it yours here. Photo paths point into public/ (do not include "public" in a URL).
@@ -63,7 +64,7 @@ export const anniversary = {
     returnLabel: 'Back to my invitation',
     acceptedTitle: "Yay, Yen! It's a date!",
     acceptedMessage: "I can't wait to make another beautiful memory with you.",
-    acceptedDate: 'See you on November 22, my love.',
+    acceptedDate: 'See you on November 22 at 6:00 PM, my love.',
     signature: 'Love, Maki.',
     acceptedCta: 'See Our Special Day',
     localNote: 'Saved on this browser only. Give Maki a little heads-up, too.',
@@ -76,9 +77,9 @@ export const anniversary = {
     heading: "It's a date, my love.",
     greeting: 'My dearest Yen,',
     thankYou: 'Thank you for saying yes to our special anniversary date. Sharing this first chapter with you means so much to me.',
-    intro: "I've put a little copy of our day below, so you can keep it close. Just you, me, and another beautiful memory.",
-    dateLabel: 'OUR SPECIAL DAY',
-    itineraryEyebrow: 'A DAY TO REMEMBER',
+    intro: 'Here are the details for our anniversary dinner at The Nest Dining in the Sky, booked for 6:00 PM. Just you, me, and a beautiful evening together.',
+    dateLabel: 'OUR SPECIAL EVENING',
+    itineraryEyebrow: 'OUR DINNER DATE',
     returnLabel: 'Return to our little chapter',
     closing: "I can't wait to make another beautiful memory with you.",
     signature: 'Love, Maki.',
@@ -192,16 +193,39 @@ export const anniversary = {
     ] as Memory[],
   },
   itinerary: {
-    eyebrow: 'SAVE A LITTLE SPACE IN YOUR SUNDAY',
+    eyebrow: 'AN EVENING JUST FOR US',
     title: 'Our Little Adventure Awaits',
-    subtitle: "Here's a little glimpse of the day I've been planning for us.",
-    note: 'A little mystery for now. The details are still being dreamed up.',
+    subtitle: 'One special evening, a table for two, and a beautiful view.',
+    note: 'Our anniversary dinner is booked for 6:00 PM. Just you, me, and a beautiful evening together.',
     mapsLabel: 'Find our way',
     entries: [
-      { id: 'morning', period: 'Morning', time: 'Time to be announced', place: 'A place to be revealed', title: 'Surprise Stop #1', description: 'A sweet beginning to a day that belongs to us.', icon: 'sunrise' },
-      { id: 'midday', period: 'Midday', time: 'Time to be announced', place: 'A table for two, somewhere lovely', title: 'Our Food Date', description: 'Good food, your smile, and all the time in the world to talk.', icon: 'utensils' },
-      { id: 'afternoon', period: 'Afternoon', time: 'Time to be announced', place: 'Somewhere we can make a memory', title: 'A Little Adventure', description: 'A little wandering, a little wonder, and you by my side.', icon: 'compass' },
-      { id: 'evening', period: 'Evening', time: 'Time to be announced', place: 'One last little secret', title: 'Our Final Surprise', description: 'A lovely ending to a day I hope we will always remember.', icon: 'moon' },
+      {
+        id: 'evening', period: 'Evening', time: '6:00 PM',
+        place: 'The Nest Dining in the Sky · Vivere Hotel, Alabang',
+        title: 'Anniversary Dinner in the Sky',
+        description: "I've booked our anniversary dinner at The Nest Dining in the Sky for 6:00 PM. A special table for two, good food, and another beautiful memory with you.",
+        icon: 'utensils',
+        dressCode: 'A dress, formal attire, or smart semi-formal attire.',
+        attireOptions: [
+          { id: 'dress', label: 'Dress', example: 'A midi or maxi dress with heels or dressy flats.', detail: 'A satin finish, a soft floral print, or a simple elegant cut would be lovely.' },
+          { id: 'formal', label: 'Formal', example: 'A tailored suit or an elegant evening dress.', detail: 'For a suit, add a dress shirt and polished shoes. A few simple accessories finish either look.' },
+          { id: 'semi-formal', label: 'Semi-formal', example: 'A blazer with tailored trousers, or a blouse with a skirt.', detail: 'Pair with dressy loafers, low heels, or polished flats for a relaxed, put-together look.' },
+        ],
+        gallery: [
+          { src: '/images/venues/the-nest-terrace.webp', alt: 'The Nest terrace with poolside seating and a view over the city', caption: 'A view worth sharing', fit: 'contain' },
+          { src: '/images/venues/the-nest-table.webp', alt: 'A candlelit table for two beside the rooftop pool at night', caption: 'A little candlelight, just for us', fit: 'contain' },
+          { src: '/images/venues/the-nest-lobby.webp', alt: 'The hotel lobby with a curved staircase and a decorated Christmas tree', caption: 'A warm welcome', fit: 'contain' },
+          { src: '/images/venues/the-nest-evening.webp', alt: 'The city skyline and illuminated streets seen from the rooftop at night', caption: 'City lights after dark', fit: 'contain' },
+        ],
+        image: {
+          src: '/images/venues/the-nest-interior.png',
+          alt: 'The Nest rooftop dining area beside the pool, overlooking the Alabang skyline at dusk',
+          emailSrc: 'https://viverehotel.com.ph/wp-content/uploads/2026/04/Blog-Photos-18.png',
+          sourceUrl: 'https://viverehotel.com.ph/stories/the-nest-rooftop-dining-alabang-manila/',
+          sourceLabel: 'Photo: Vivere Hotel',
+        },
+        mapsUrl: 'https://www.google.com/maps/search/?api=1&query=The+Nest+Dining+in+the+Sky+Vivere+Hotel+Alabang',
+      },
     ] as ItineraryEntry[],
   },
   gift: {
