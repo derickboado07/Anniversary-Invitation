@@ -1,4 +1,4 @@
-const previewResetRevision = '2026-11-11-rsvp-replay-2'
+const previewResetRevision = '2026-11-12-rsvp-replay-3'
 
 function storageValue(storage: 'localStorage' | 'sessionStorage', key: string) {
   try { return window[storage].getItem(key) } catch { return null }

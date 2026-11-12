@@ -74,5 +74,23 @@ export default function App() {
     setPreviewRun(previous => previous + 1)
     window.scrollTo({ top: 0, behavior: 'instant' })
   }
-  return <MotionConfig reducedMotion="user"><div key={previewRun} inert={!opened} className={opened ? 'invitation-site is-revealed' : 'invitation-site'}><a className="skip-link" href="#main">Skip to the letter</a><Navigation/><main ref={main} id="main">{opened && <HeroSection/>}<DateInvitation accepted={accepted} onAccept={accept} acceptanceSaved={acceptanceSaved} emailStatus={itineraryEmail.status} onRetryEmail={() => { void itineraryEmail.send() }}/><Countdown/><MemoriesGallery/><ItineraryTimeline/><GiftExchange/><LoveLetter/></main><Footer accepted={accepted}/>{opened && data.audio.enabled && <BackgroundMusic/>}{import.meta.env.DEV && opened && <PreviewControls onRestart={restart}/>}</div>{!opened && <EnvelopeIntro onOpen={open}/>}</MotionConfig>
+  return <MotionConfig reducedMotion="user">
+    <div key={previewRun} inert={!opened} className={opened ? 'invitation-site is-revealed' : 'invitation-site'}>
+      <a className="skip-link" href="#main">Skip to the letter</a>
+      <Navigation/>
+      <main ref={main} id="main">
+        {opened && <HeroSection/>}
+        <DateInvitation accepted={accepted} onAccept={accept} acceptanceSaved={acceptanceSaved} emailStatus={itineraryEmail.status} onRetryEmail={() => { void itineraryEmail.send() }}/>
+        <Countdown/>
+        {accepted && <ItineraryTimeline/>}
+        <MemoriesGallery/>
+        <GiftExchange/>
+        <LoveLetter/>
+      </main>
+      <Footer accepted={accepted}/>
+      {opened && data.audio.enabled && <BackgroundMusic/>}
+      {import.meta.env.DEV && opened && <PreviewControls onRestart={restart}/>}
+    </div>
+    {!opened && <EnvelopeIntro onOpen={open}/>}
+  </MotionConfig>
 }

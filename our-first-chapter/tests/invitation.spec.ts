@@ -1,5 +1,9 @@
 import { expect, test, type Page } from 'playwright/test'
 
+test.beforeEach(async ({ page }) => {
+  await page.route('https://api.emailjs.com/**', route => route.abort())
+})
+
 async function openLetter(page: Page) {
   await page.goto('/')
   const opener = page.getByRole('button', { name: 'Open My Letter', exact: true })
@@ -58,15 +62,36 @@ test('a sealed letter opens into the complete first anniversary experience', asy
   await page.screenshot({ path: testInfo.outputPath('hero.png') })
   for (const title of [
     '12 Months. Countless Memories.',
-    'Our Little Adventure Awaits',
     'A Little Letter for You',
     'This Is Only Our First Chapter.',
   ]) {
     await expect(page.getByRole('heading', { name: title, exact: true })).toHaveCount(1)
   }
+  await expect(page.locator('#itinerary')).toHaveCount(0)
   await expect(page.getByText('Sunday, November 22, 2026', { exact: true }).first()).toBeVisible()
   await page.locator('footer').scrollIntoViewIfNeeded()
   expect(errors).toEqual([])
+})
+
+test('the itinerary stays hidden until Yes and appears directly below the countdown', async ({ page }) => {
+  await openLetter(page)
+  await expect(page.locator('#itinerary')).toHaveCount(0)
+  await expect(page.locator('.museum-photo-stack, .venue-gallery-stage')).toHaveCount(0)
+  await page.evaluate(() => { window.location.hash = 'itinerary' })
+  await expect(page).toHaveURL(/#itinerary$/)
+  await expect(page.locator('#itinerary')).toHaveCount(0)
+
+  await page.getByRole('button', { name: 'Maybe later', exact: true }).click()
+  await expect(page.getByText('Of course, my love. Take your time. Your invitation will be right here.')).toBeVisible()
+  await expect(page.locator('#itinerary')).toHaveCount(0)
+  await page.getByRole('button', { name: 'Back to my invitation', exact: true }).click()
+  await page.getByRole('button', { name: /YES, MAKI!/ }).click()
+
+  await expect(page.getByRole('heading', { name: 'Our Little Adventure Awaits', exact: true })).toBeVisible()
+  await expect(page.locator('#countdown + #itinerary')).toHaveCount(1)
+  await expect(page.locator('#itinerary + #story')).toHaveCount(1)
+  await page.getByRole('link', { name: 'See Our Special Day', exact: true }).click()
+  await expect(page.locator('#itinerary-title')).toBeInViewport()
 })
 
 test('acceptance is saved only locally and survives a refresh', async ({ page }) => {
@@ -79,15 +104,18 @@ test('acceptance is saved only locally and survives a refresh', async ({ page })
   const opener = page.getByRole('button', { name: 'Open My Letter', exact: true })
   if (await opener.isVisible()) await opener.click()
   await expect(page.getByRole('heading', { name: "Yay, Yen! It's a date!" })).toBeVisible()
+  await expect(page.locator('#countdown + #itinerary')).toHaveCount(1)
   await page.getByRole('link', { name: 'See Our Special Day', exact: true }).click()
   await expect(page).toHaveURL(/#itinerary$/)
 })
 
 test('Maybe later offers a calm way to defer and return', async ({ page }) => {
   await openLetter(page)
+  await expect(page.locator('#itinerary')).toHaveCount(0)
   await page.getByRole('button', { name: 'Maybe later', exact: true }).click()
   await expect(page.getByText('Of course, my love. Take your time. Your invitation will be right here.')).toBeVisible()
   expect(await page.evaluate(() => localStorage.getItem('maki-yen-first-anniversary-accepted'))).toBeNull()
+  await expect(page.locator('#itinerary')).toHaveCount(0)
   await page.getByRole('button', { name: 'Back to my invitation', exact: true }).click()
   await expect(page.getByRole('button', { name: /YES, MAKI!/ })).toBeVisible()
 })
@@ -104,6 +132,7 @@ test('acceptance stays usable and honest when browser storage is blocked', async
   await page.getByRole('button', { name: /YES, MAKI!/ }).click()
   await expect(page.getByRole('heading', { name: "Yay, Yen! It's a date!" })).toBeVisible()
   await expect(page.getByText("It's a date! This browser couldn't save your answer for next time. Give Maki a little heads-up, too.")).toBeVisible()
+  await expect(page.locator('#countdown + #itinerary')).toHaveCount(1)
 })
 
 test('No stays still for keyboard focus and can defer without chasing', async ({ page }) => {

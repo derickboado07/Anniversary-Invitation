@@ -2,10 +2,15 @@ import { expect, test, type Page } from 'playwright/test'
 
 test.use({ reducedMotion: 'reduce' })
 
+test.beforeEach(async ({ page }) => {
+  await page.route('https://api.emailjs.com/**', route => route.abort())
+})
+
 async function showDinner(page: Page) {
   await page.goto('/')
   await page.getByRole('button', { name: 'Open My Letter', exact: true }).click()
   await expect(page.locator('.hero-art')).toBeVisible()
+  await page.getByRole('button', { name: /YES, MAKI!/ }).click()
   await page.locator('.venue-gallery-stage').scrollIntoViewIfNeeded()
   await page.mouse.move(0, 0)
   await page.locator('.venue-gallery-slide.is-active img').evaluate(image => (image as HTMLImageElement).decode())
@@ -89,6 +94,7 @@ test.describe('slideshow playback', () => {
     await page.goto('/')
     await page.getByRole('button', { name: 'Open My Letter', exact: true }).click()
     await page.clock.runFor(3000)
+    await page.getByRole('button', { name: /YES, MAKI!/ }).click()
     await page.locator('.venue-gallery-stage').scrollIntoViewIfNeeded()
     await page.clock.runFor(1000)
     await page.clock.pauseAt(await page.evaluate(() => Date.now() + 1000))
