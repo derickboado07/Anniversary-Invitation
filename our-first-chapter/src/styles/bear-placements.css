@@ -16,10 +16,10 @@
   transform: rotate(-8deg);
 }
 
-.hero-art { padding-bottom: 140px; }
-.hero-art .back-paper { bottom: 117px; }
-.hero-art .hero-orbit { bottom: 125px; }
-.hero-art .anniversary-stamp { bottom: 112px; }
+.hero-art { padding-bottom: 100px; }
+.hero-art .back-paper { bottom: 77px; }
+.hero-art .hero-orbit { bottom: 85px; }
+.hero-art .anniversary-stamp { bottom: 72px; }
 
 /* Keep every frame of the supplied photo-booth strip in view. */
 .hero-art-photostrip { max-width: 340px; }
@@ -54,13 +54,13 @@
   object-fit: contain;
   background: #fff;
 }
-.has-back-photo .hero-bears,
-.has-back-photo .anniversary-stamp { z-index: 2; }
+.hero-art.has-back-photo .anniversary-stamp { z-index: 2; top: 10px; right: 0; bottom: auto; }
 
 .hero-bears {
   position: absolute;
+  z-index: 3;
   width: 148px;
-  left: 12px;
+  right: 12px;
   bottom: 8px;
   padding: 5px;
   border: 1px solid #e5c7c5;
@@ -95,21 +95,43 @@
   margin: -12px auto 17px;
 }
 
+@media (min-width: 761px) and (max-width: 1050px) {
+  .hero-bears { width: 132px; right: -8px; }
+}
+
 @media (max-width: 760px) {
-  .hero-art .back-paper { bottom: 119px; }
-  .hero-art .hero-orbit { bottom: 117px; }
-  .hero-art .anniversary-stamp { bottom: 122px; }
+  .hero-art .back-paper { bottom: 79px; }
+  .hero-art .hero-orbit { bottom: 77px; }
+  .hero-art .anniversary-stamp { bottom: 82px; }
 }
 
 @media (max-width: 480px) {
   .hero-art.has-back-photo { width: 100%; padding-inline: 16px; }
   .hero-art.has-back-photo .back-paper-photo { inset: 46px 16px auto auto; }
   .envelope-bears { width: 136px; left: -18px; bottom: -22px; }
-  .hero-art { padding-bottom: 116px; }
-  .hero-art .back-paper { bottom: 96px; }
-  .hero-art .hero-orbit { bottom: 94px; }
-  .hero-art .anniversary-stamp { bottom: 103px; }
-  .hero-bears { width: 124px; left: 6px; bottom: 4px; }
+  .hero-art { padding-bottom: 84px; }
+  .hero-art .back-paper { bottom: 64px; }
+  .hero-art .hero-orbit { bottom: 62px; }
+  .hero-art .anniversary-stamp { bottom: 71px; }
+  .hero-bears { width: 124px; right: 8px; bottom: 4px; }
   .invitation-bears { width: 160px; margin: 8px auto 12px; }
   .footer-bears { width: 150px; margin-top: -8px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-bears { animation: keepsake-bob 5s ease-in-out 1.3s infinite; }
+  .invitation-bears > .dudu-bubu-image {
+    transform-origin: 50% 85%;
+    animation: keepsake-sway 6s ease-in-out infinite;
+  }
+}
+
+@keyframes keepsake-bob {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -3px; }
+}
+
+@keyframes keepsake-sway {
+  0%, 100% { rotate: -1.5deg; }
+  50% { rotate: 1.5deg; }
 }

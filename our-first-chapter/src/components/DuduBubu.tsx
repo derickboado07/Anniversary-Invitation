@@ -1,6 +1,6 @@
 import '../styles/dudu-bubu.css'
 
-type Pose = 'cuddle' | 'letter' | 'celebrate'
+type Pose = 'cuddle' | 'letter' | 'celebrate' | 'dance'
 
 const ink = '#654438'
 const caramel = '#bd8b65'
@@ -12,7 +12,7 @@ function Heart({ x, y, size = 20, className = '' }: { x: number; y: number; size
 }
 
 function BearHead({ bubu = false, happy = false }: { bubu?: boolean; happy?: boolean }) {
-  return <g stroke={ink} strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+  return <g className={`dudu-bubu-head${bubu ? ' dudu-bubu-head-bubu' : ''}`} stroke={ink} strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="23" cy="27" r="15" fill={bubu ? ink : caramel}/>
     <circle cx="97" cy="27" r="15" fill={bubu ? ink : caramel}/>
     {!bubu && <><circle cx="23" cy="27" r="7" fill="#dfb495" stroke="none"/><circle cx="97" cy="27" r="7" fill="#dfb495" stroke="none"/></>}
@@ -20,7 +20,7 @@ function BearHead({ bubu = false, happy = false }: { bubu?: boolean; happy?: boo
     <ellipse cx="27" cy="83" rx="10" ry="6" fill="#eda39d" opacity={bubu ? '.78' : '.72'} stroke="none"/>
     <ellipse cx="92" cy="83" rx="10" ry="6" fill="#eda39d" opacity={bubu ? '.78' : '.72'} stroke="none"/>
     {!bubu && <ellipse cx="60" cy="84" rx="16" ry="13" fill="#f0d4b5" stroke="none"/>}
-    {happy ? <><path d="m38 71 5-4 5 4M73 71l5-4 5 4" fill="none"/></> : <><ellipse cx="43" cy="72" rx="2.8" ry="3.8" fill={ink} stroke="none"/><ellipse cx="78" cy="72" rx="2.8" ry="3.8" fill={ink} stroke="none"/></>}
+    {happy ? <path d="m38 71 5-4 5 4M73 71l5-4 5 4" fill="none"/> : <g className={`dudu-bubu-eyes${bubu ? ' dudu-bubu-eyes-late' : ''}`}><ellipse cx="43" cy="72" rx="2.8" ry="3.8" fill={ink} stroke="none"/><ellipse cx="78" cy="72" rx="2.8" ry="3.8" fill={ink} stroke="none"/></g>}
     <ellipse cx="60" cy="80" rx="3.5" ry="2.5" fill={ink} stroke="none"/>
     <path d="M60 83v4m-7-1c1 5 6 5 7 1 1 4 6 4 7-1" fill="none" strokeWidth="2.5"/>
     {bubu && <path d="m43 58-3-2m38 2 3-2" fill="none" strokeWidth="2" opacity=".65"/>}
@@ -89,8 +89,8 @@ function Celebrate() {
     </g>
     <SeatedBodies/>
     <g stroke={ink} strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
-      <path className="dudu-bubu-wave" d="M79 164c-13-3-27-14-33-26-4-9-12-7-13 0-2 12 7 34 29 45" fill={caramel}/>
-      <path d="M239 164c14-5 25-15 31-28 4-8 12-5 12 2 1 13-7 33-27 45" fill={cream}/>
+      <path className="dudu-bubu-wave dudu-bubu-wave-left" d="M79 164c-13-3-27-14-33-26-4-9-12-7-13 0-2 12 7 34 29 45" fill={caramel}/>
+      <path className="dudu-bubu-wave dudu-bubu-wave-right" d="M239 164c14-5 25-15 31-28 4-8 12-5 12 2 1 13-7 33-27 45" fill={cream}/>
       <path d="M130 164c9 4 15 7 29 7 14 0 22-4 29-8l6 15c-11 6-23 10-35 9-15 0-26-4-34-9Z" fill={caramel}/>
       <path d="M190 163c-8 4-13 7-24 8-7 0-9 11-2 15 8 4 21-2 31-9" fill={cream}/>
     </g>
@@ -100,10 +100,40 @@ function Celebrate() {
   </>
 }
 
+function Dance() {
+  return <>
+    <Heart x={145} y={14} size={22} className="dudu-bubu-heart"/>
+    <Heart x={22} y={68} size={12} className="dudu-bubu-heart dudu-bubu-heart-late"/>
+    <Heart x={282} y={68} size={14} className="dudu-bubu-heart dudu-bubu-heart-late"/>
+    <g stroke={ink} strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round">
+      <g className="dudu-bubu-dancer dudu-bubu-dancer-dudu">
+        <path className="dudu-bubu-dance-arm dudu-bubu-dance-arm-left" d="M77 151c-10-2-19-12-24-23-3-8-13-7-14 1-1 14 10 33 27 39" fill={caramel}/>
+        <path d="M76 136c-11 16-13 43-9 64 2 12 17 17 39 17 24 0 38-7 39-19 2-26-5-49-20-64Z" fill={caramel}/>
+        <ellipse cx="107" cy="180" rx="21" ry="25" fill="#f0d4b5" stroke="none"/>
+        <g className="dudu-bubu-dance-foot"><ellipse cx="80" cy="214" rx="17" ry="10" fill={caramel}/></g>
+        <g className="dudu-bubu-dance-foot dudu-bubu-dance-foot-late"><ellipse cx="130" cy="214" rx="17" ry="10" fill={caramel}/></g>
+        <path d="M128 149c11-1 21 8 31 11 7 2 7 13-1 14-13 1-27-7-36-11" fill={caramel}/>
+        <g transform="translate(47 28) scale(.94)"><BearHead/></g>
+      </g>
+      <g className="dudu-bubu-dancer dudu-bubu-dancer-bubu">
+        <path className="dudu-bubu-dance-arm dudu-bubu-dance-arm-right" d="M242 151c11-4 20-13 25-24 4-8 13-5 13 3-1 14-12 31-28 38" fill={cream}/>
+        <path d="M190 135c-14 16-20 42-17 64 1 12 16 18 39 18 24 0 39-5 42-18 3-23-3-48-18-63Z" fill={cream}/>
+        <g className="dudu-bubu-dance-foot dudu-bubu-dance-foot-late"><ellipse cx="187" cy="214" rx="17" ry="10" fill={ink}/></g>
+        <g className="dudu-bubu-dance-foot"><ellipse cx="238" cy="214" rx="17" ry="10" fill={ink}/></g>
+        <path d="M189 148c-10 1-20 10-30 12-8 2-8 13 0 14 13 1 27-7 36-12" fill={cream}/>
+        <g transform="translate(156 28) scale(.94)"><BearHead bubu/></g>
+      </g>
+    </g>
+    <g fill="none" stroke="#c59872" strokeWidth="2.5" strokeLinecap="round" opacity=".75">
+      <path d="m42 191-7 2m245-2 6 2M98 22l-3-5m129 5 3-5"/>
+    </g>
+  </>
+}
+
 /** Original, decorative vector stickers of the little bear couple. */
 export function DuduBubu({ pose = 'cuddle', className = '' }: { pose?: Pose; className?: string }) {
   return <svg className={`dudu-bubu dudu-bubu--${pose} ${className}`.trim()} viewBox="0 0 320 240" width="320" height="240" fill="none" aria-hidden="true" focusable="false">
     <ellipse cx="160" cy="221" rx="103" ry="8" fill="#b17c65" opacity=".13"/>
-    {pose === 'letter' ? <Letter/> : pose === 'celebrate' ? <Celebrate/> : <Cuddle/>}
+    {pose === 'letter' ? <Letter/> : pose === 'celebrate' ? <Celebrate/> : pose === 'dance' ? <Dance/> : <Cuddle/>}
   </svg>
 }

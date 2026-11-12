@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from 'motion/react'
 import { anniversary } from '../data/anniversary'
 import type { Memory } from '../data/anniversary'
 import { hasImage } from '../lib/images'
+import { RevealText } from './RevealText'
 import '../styles/memories.css'
 
 const palette = [
@@ -102,7 +103,7 @@ export function MemoriesGallery() {
     <section id="story" className="memories-section section-shell" aria-labelledby="memories-heading">
       <motion.div className="memories-intro" initial={reducedMotion ? false : { opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: .4 }} transition={{ duration: .6 }}>
         <span className="eyebrow">{memories.eyebrow}</span>
-        <h2 id="memories-heading" className="section-heading">{memories.title}</h2>
+        <RevealText id="memories-heading" className="section-heading">{memories.title}</RevealText>
         <p>{memories.description}</p>
         <span className="memories-flourish" aria-hidden="true"><i /><Heart size={16} strokeWidth={1.4} /><i /></span>
       </motion.div>

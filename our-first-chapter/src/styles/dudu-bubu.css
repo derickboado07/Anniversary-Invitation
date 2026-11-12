@@ -25,25 +25,99 @@
 }
 
 .dudu-bubu-wave {
-  transform-box: fill-box;
-  transform-origin: bottom right;
+  transform-box: view-box;
   animation: bear-little-wave 4.5s ease-in-out infinite;
 }
 
+.dudu-bubu-wave-left { transform-origin: 70px 168px; }
+.dudu-bubu-wave-right { transform-origin: 249px 168px; animation-direction: reverse; animation-delay: -.35s; }
+
+.dudu-bubu-head {
+  transform-box: fill-box;
+  transform-origin: 50% 91%;
+  animation: bear-head-tilt 5.6s ease-in-out infinite;
+}
+
+.dudu-bubu-head-bubu { animation-direction: reverse; animation-delay: -.7s; }
+
+.dudu-bubu-eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: bear-blink 5.2s ease-in-out infinite;
+}
+
+.dudu-bubu-eyes-late { animation-delay: -1.7s; }
+
+.dudu-bubu-dancer {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: bear-dance-step 2.4s ease-in-out infinite;
+}
+
+.dudu-bubu-dancer-bubu { animation-delay: -1.2s; }
+
+.dudu-bubu-dance-arm {
+  transform-box: view-box;
+  animation: bear-dance-wave 2.4s ease-in-out infinite;
+}
+
+.dudu-bubu-dance-arm-left { transform-origin: 73px 157px; }
+.dudu-bubu-dance-arm-right { transform-origin: 247px 157px; animation-direction: reverse; }
+
+.dudu-bubu-dance-foot {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: bear-foot-tap 2.4s ease-in-out infinite;
+}
+
+.dudu-bubu-dance-foot-late { animation-delay: -1.2s; }
+
 @keyframes bear-heart-float {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -4px; }
+  0%, 100% { translate: 0 0; opacity: .8; }
+  50% { translate: 0 -7px; opacity: 1; }
 }
 
 @keyframes bear-little-wave {
   0%, 72%, 100% { rotate: 0deg; }
-  80% { rotate: -6deg; }
-  88% { rotate: 3deg; }
+  80% { rotate: -18deg; }
+  88% { rotate: 10deg; }
+}
+
+@keyframes bear-head-tilt {
+  0%, 35%, 75%, 100% { rotate: 0deg; }
+  50%, 60% { rotate: 3deg; }
+}
+
+@keyframes bear-blink {
+  0%, 43%, 49%, 88%, 94%, 100% { scale: 1 1; }
+  46%, 91% { scale: 1 .08; }
+}
+
+@keyframes bear-dance-step {
+  0%, 50%, 100% { translate: 0 0; rotate: -1.5deg; }
+  25% { translate: 0 -3px; rotate: 1.5deg; }
+  75% { translate: 0 -2px; rotate: 1.5deg; }
+}
+
+@keyframes bear-dance-wave {
+  0%, 50%, 100% { rotate: 0deg; }
+  20%, 70% { rotate: -19deg; }
+  35%, 85% { rotate: 7deg; }
+}
+
+@keyframes bear-foot-tap {
+  0%, 45%, 100% { translate: 0 0; rotate: 0deg; }
+  20%, 30% { translate: 0 -5px; rotate: -9deg; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .dudu-bubu-heart,
-  .dudu-bubu-wave {
+  .dudu-bubu-wave,
+  .dudu-bubu-head,
+  .dudu-bubu-eyes,
+  .dudu-bubu-dancer,
+  .dudu-bubu-dance-arm,
+  .dudu-bubu-dance-foot {
     animation: none;
   }
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Heart } from 'lucide-react'
 import { anniversary } from '../data/anniversary'
+import { RevealText } from './RevealText'
 import '../styles/invitation.css'
 
 const target = Date.parse(anniversary.countdownTarget)
@@ -25,7 +26,7 @@ export function Countdown() {
   return (
     <section id="countdown" className="anniversary-countdown section-shell" aria-labelledby="countdown-heading">
       <p className="eyebrow">{content.eyebrow}</p>
-      <h2 id="countdown-heading" className="section-heading">{content.title}</h2>
+      <RevealText id="countdown-heading" className="section-heading">{content.title}</RevealText>
       <p className="countdown-subtitle">{content.subtitle}</p>
       {remaining <= 0 ? (
         <p data-testid="countdown-complete" className="countdown-complete handwritten" role="status"><Heart size={24} aria-hidden="true" />{content.complete}</p>

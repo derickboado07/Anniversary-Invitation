@@ -5,6 +5,7 @@ import { anniversary as data } from '../data/anniversary'
 import { hasImage } from '../lib/images'
 import { Rose } from './Rose'
 import { DuduBubuImage } from './DuduBubuImage'
+import { RevealText } from './RevealText'
 
 export function HeroSection() {
   const reduced = useReducedMotion()
@@ -21,15 +22,15 @@ export function HeroSection() {
       <motion.p className="hero-subtitle" initial={{ opacity: reduced ? 1 : 0 }} animate={{ opacity: 1 }} transition={{ duration: .7, delay: .45 }}>{data.hero.subtitle}</motion.p>
       <a className="button button-primary hero-cta" href="#invitation">{data.hero.cta}<ArrowUpRight size={17}/></a>
       <div className="hero-names"><span className="tiny-line"/><p>{data.names.together}</p><Heart size={14} fill="currentColor" strokeWidth={0}/></div>
-      <p className="handwritten hero-note">{data.hero.note}</p>
+      <RevealText as="p" className="handwritten hero-note" delay={.45}>{data.hero.note}</RevealText>
     </motion.div>
     <motion.div className={`hero-art${data.hero.photo.format === 'photostrip' ? ' hero-art-photostrip' : ''}${hasBackPhoto ? ' has-back-photo' : ''}`} initial={{ opacity: reduced ? 1 : 0, rotate: reduced ? 0 : -3, y: reduced ? 0 : 25 }} animate={{ opacity: 1, rotate: 0, y: 0 }} transition={{ duration: 1, delay: .18 }}>
       <div className="hero-orbit" aria-hidden="true"/>
       <span className="hero-art-spark" aria-hidden="true">✧</span>
-      <div className={`back-paper${hasBackPhoto ? ' back-paper-photo' : ''}`}>
+      <motion.div className={`back-paper${hasBackPhoto ? ' back-paper-photo' : ''}`} initial={reduced ? false : { opacity: 0, y: 12, rotate: 8 }} animate={{ opacity: 1, y: 0, rotate: hasBackPhoto ? 6 : 8 }} transition={{ duration: reduced ? 0 : .85, delay: reduced ? 0 : .2 }}>
         {hasBackPhoto ? <img src={data.hero.backPhoto.src} alt={data.hero.backPhoto.alt} width={724} height={2172} decoding="async" onError={() => setBackFailed(true)}/> : <><span>{data.hero.occasion}</span><Heart size={36} strokeWidth={.7}/></>}
-      </div>
-      <figure className="hero-polaroid">
+      </motion.div>
+      <motion.figure className="hero-polaroid" initial={reduced ? false : { opacity: 0, y: 20, rotate: -7 }} animate={{ opacity: 1, y: 0, rotate: -5 }} transition={{ duration: reduced ? 0 : .9, delay: reduced ? 0 : .35 }}>
         <div className="photo-tape" aria-hidden="true"/>
         <div className="hero-photo">
           {hasImage(data.hero.photo.src) && !failed ? <img src={data.hero.photo.src} alt={data.hero.photo.alt} style={{ objectPosition: data.hero.photo.position }} fetchPriority="high" onError={() => setFailed(true)}/> : <div className="hero-photo-placeholder" role="img" aria-label={data.hero.placeholder}>
@@ -37,8 +38,8 @@ export function HeroSection() {
           </div>}
         </div>
         <figcaption className="handwritten">{data.hero.photoNote}<Heart size={16}/></figcaption>
-      </figure>
-      <div className="hero-bears"><DuduBubuImage scene="together"/></div>
+      </motion.figure>
+      <motion.div className="hero-bears" initial={reduced ? false : { opacity: 0, scale: .9, y: 12, rotate: -12 }} animate={{ opacity: 1, scale: 1, y: 0, rotate: -8 }} transition={{ duration: reduced ? 0 : .6, delay: reduced ? 0 : .7 }}><DuduBubuImage scene="together"/></motion.div>
       <div className="anniversary-stamp"><span>{day}</span><span>{month.toUpperCase()} · {data.anniversaryDate.slice(0,4)}</span><Heart size={12}/></div>
       <p className="hero-side-note" aria-hidden="true">{data.hero.occasion} <Sparkles size={12}/></p>
     </motion.div>

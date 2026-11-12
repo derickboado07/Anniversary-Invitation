@@ -100,7 +100,9 @@ Icons available: `sunrise`, `utensils`, `compass`, and `moon`. Leave `mapsUrl` a
 
 ## Dudu and Bubu artwork
 
-The two supplied illustrations from `Monthly Image/` are displayed separately: the standing pair beside the hero photo, and the bucket-hat pair holding hearts on the date invitation. Their website copies are in `public/images/dudu-bubu/`; replace those copies to change the artwork. The opening envelope, accepted invitation, and footer each use a different vector pose in `src/components/DuduBubu.tsx`. Placement and mobile sizing live in `src/styles/bear-placements.css`.
+The two supplied illustrations from `Monthly Image/` are displayed separately: the standing pair overlaps the lower corner of the hero photos in the foreground, and the bucket-hat pair holds hearts on the date invitation. Their website copies are in `public/images/dudu-bubu/`; replace those copies to change the artwork. The opening envelope, accepted invitation, and footer each use a different vector pose in `src/components/DuduBubu.tsx`. The footer pair dances with moving arms, blinking eyes, and tapping feet. Placement and mobile sizing live in `src/styles/bear-placements.css`.
+
+Photo strips enter in sequence, headings reveal word by word as they come into view, and the bear pictures gently float or sway. `src/components/RevealText.tsx` controls the heading reveals. All animations respect the visitor's reduced-motion setting, keeping text and artwork fully visible without motion.
 
 ## Gift exchange and music
 
