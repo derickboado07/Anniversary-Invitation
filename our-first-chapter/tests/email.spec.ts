@@ -6,9 +6,11 @@ const endpoint = 'https://api.emailjs.com/api/v1.0/email/send'
 const success = 'Your itinerary is on its way. Please check your inbox and spam folder.'
 const uncertain = "I couldn't confirm the email copy. Please check your inbox before trying again."
 const storageKey = 'maki-yen-first-anniversary-accepted'
+const artVenue = 'Art Lounge Manila – Molito · Alabang'
+const artMapsUrl = 'https://www.google.com/maps/search/?api=1&query=Art+Lounge+Manila+Molito+Alabang'
 const dinnerVenue = 'The Nest Dining in the Sky · Vivere Hotel, Alabang'
 const dinnerMapsUrl = 'https://www.google.com/maps/search/?api=1&query=The+Nest+Dining+in+the+Sky+Vivere+Hotel+Alabang'
-const planningNote = 'Our anniversary dinner is booked for 6:00 PM. Just you, me, and a beautiful evening together.'
+const planningNote = 'A little art at 4:00 PM, then our anniversary dinner at 6:00 PM. Two beautiful stops, one special day with you.'
 const dressCode = 'A dress, formal attire, or smart semi-formal attire.'
 const attireExamples = [
   { label: 'Dress', example: 'A midi or maxi dress with heels or dressy flats.' },
@@ -51,19 +53,24 @@ test('Yes requests the full itinerary once while acceptance is immediate', async
   expect(parameters.thank_you).toBe('Thank you for saying yes to our special anniversary date. Sharing this first chapter with you means so much to me.')
   expect(parameters.email_heading).toBe("It's a date, my love.")
   expect(parameters.itinerary_heading).toBe('Our Little Adventure Awaits')
+  expect(parameters.intro).toBe('Our anniversary date begins with art at Art Lounge Manila – Molito at 4:00 PM, followed by our dinner at The Nest Dining in the Sky at 6:00 PM. Just you, me, and a beautiful afternoon into evening.')
   expect(parameters.celebration_date).toBe('Sunday, November 22, 2026')
   expect(parameters.site_url).toBe('')
   expect(parameters).not.toHaveProperty('to_email')
   expect(parameters).not.toHaveProperty('user_email')
   const stops = parameters.itinerary as ItineraryEmailStop[]
-  expect(stops.map(stop => stop.title)).toEqual(['Anniversary Dinner in the Sky'])
-  expect(stops.map(stop => stop.number)).toEqual(['01'])
-  expect(stops[0]).toMatchObject({ period: 'Evening', time: '6:00 PM', place: dinnerVenue, maps_url: dinnerMapsUrl, dress_code: dressCode, image_source_label: 'Photo: Vivere Hotel' })
-  expect(stops[0].image_url).toMatch(/^https:\/\//)
-  expect(stops[0].image_source_url).toMatch(/^https:\/\//)
-  expect(stops[0].image_alt).toBeTruthy()
-  expect(stops[0].attire_examples).toMatchObject(attireExamples)
-  expect(stops[0].attire_examples?.every(option => option.detail.trim().length > 0)).toBeTruthy()
+  expect(stops.map(stop => stop.title)).toEqual(['An Afternoon of Art Together', 'Anniversary Dinner in the Sky'])
+  expect(stops.map(stop => stop.number)).toEqual(['01', '02'])
+  expect(stops[0]).toMatchObject({ period: 'Afternoon', time: '4:00 PM', place: artVenue, maps_url: artMapsUrl, dress_code: '', attire_examples: [] })
+  expect(stops[1]).toMatchObject({ period: 'Evening', time: '6:00 PM', place: dinnerVenue, maps_url: dinnerMapsUrl, dress_code: dressCode, image_source_label: 'Photo: Vivere Hotel' })
+  for (const stop of stops) {
+    expect(stop.image_url).toMatch(/^https:\/\//)
+    expect(stop.image_source_url).toMatch(/^https:\/\//)
+    expect(stop.image_alt).toBeTruthy()
+    expect(stop.image_source_label).toBeTruthy()
+  }
+  expect(stops[1].attire_examples).toMatchObject(attireExamples)
+  expect(stops[1].attire_examples?.every(option => option.detail.trim().length > 0)).toBeTruthy()
   expect(JSON.stringify(stops)).not.toMatch(/Time to be announced|Surprise Stop #1|Our Food Date|A Little Adventure/)
   expect(parameters.planning_note).toBe(planningNote)
   release()
@@ -151,9 +158,14 @@ test('the saved itinerary contains the same complete schedule without exposing l
   expect(text).toContain('Sunday, November 22, 2026')
   expect(text).toContain('My dearest Yen,')
   expect(text).toContain('Thank you for saying yes to our special anniversary date.')
-  expect(text).toContain('1. Anniversary Dinner in the Sky')
-  expect(text.match(/^\d+\. /gm)).toHaveLength(1)
+  expect(text).toContain('1. An Afternoon of Art Together')
+  expect(text).toContain('2. Anniversary Dinner in the Sky')
+  expect(text.indexOf('1. An Afternoon of Art Together')).toBeLessThan(text.indexOf('2. Anniversary Dinner in the Sky'))
+  expect(text.match(/^\d+\. /gm)).toHaveLength(2)
   expect(text).not.toMatch(/Time to be announced|Surprise Stop #1|Our Food Date|A Little Adventure|\/images\/venues\//)
+  expect(text).toContain('Afternoon · 4:00 PM')
+  expect(text).toContain(artVenue)
+  expect(text).toContain(artMapsUrl)
   expect(text).toContain('Evening · 6:00 PM')
   expect(text).toContain(dinnerVenue)
   expect(text).toContain(dinnerMapsUrl)
@@ -161,6 +173,7 @@ test('the saved itinerary contains the same complete schedule without exposing l
   expect(text).toContain(`Dress code: ${dressCode}`)
   for (const option of attireExamples) expect(text).toContain(`${option.label}: ${option.example}`)
   expect(text).toMatch(/Venue photo: https:\/\//)
+  expect(text.match(/^Venue photo: https:\/\//gm)).toHaveLength(2)
   expect(text).toMatch(/Photo: Vivere Hotel — https:\/\//)
   expect(text).not.toMatch(/localhost|127\.0\.0\.1|reset=1/)
   expect(text).toContain('Love, Maki.')

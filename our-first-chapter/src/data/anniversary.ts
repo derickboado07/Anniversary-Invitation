@@ -3,6 +3,7 @@ export interface AttireOption { id: 'dress' | 'formal' | 'semi-formal'; label: s
 export interface Memory extends PhotoAsset { id: string; month: string; shortMonth: string; year: string; caption: string }
 export interface ItineraryEntry {
   id: string; period: string; time: string; place: string; title: string; description: string;
+  kind?: 'gallery' | 'dinner';
   icon: 'sunrise' | 'utensils' | 'compass' | 'moon'; image?: PhotoAsset; gallery?: PhotoAsset[]; mapsUrl?: string; dressCode?: string; attireOptions?: AttireOption[];
 }
 
@@ -66,7 +67,7 @@ export const anniversary = {
     returnLabel: 'Back to my invitation',
     acceptedTitle: "Yay, Yen! It's a date!",
     acceptedMessage: "I can't wait to make another beautiful memory with you.",
-    acceptedDate: 'See you on November 22 at 6:00 PM, my love.',
+    acceptedDate: 'See you on November 22 at 4:00 PM, my love.',
     signature: 'Love, Maki.',
     acceptedCta: 'See Our Special Day',
     localNote: 'Saved on this browser only. Give Maki a little heads-up, too.',
@@ -79,9 +80,9 @@ export const anniversary = {
     heading: "It's a date, my love.",
     greeting: 'My dearest Yen,',
     thankYou: 'Thank you for saying yes to our special anniversary date. Sharing this first chapter with you means so much to me.',
-    intro: 'Here are the details for our anniversary dinner at The Nest Dining in the Sky, booked for 6:00 PM. Just you, me, and a beautiful evening together.',
-    dateLabel: 'OUR SPECIAL EVENING',
-    itineraryEyebrow: 'OUR DINNER DATE',
+    intro: 'Our anniversary date begins with art at Art Lounge Manila – Molito at 4:00 PM, followed by our dinner at The Nest Dining in the Sky at 6:00 PM. Just you, me, and a beautiful afternoon into evening.',
+    dateLabel: 'OUR SPECIAL DAY',
+    itineraryEyebrow: 'ART, THEN DINNER',
     returnLabel: 'Return to our little chapter',
     closing: "I can't wait to make another beautiful memory with you.",
     signature: 'Love, Maki.',
@@ -195,14 +196,45 @@ export const anniversary = {
     ] as Memory[],
   },
   itinerary: {
-    eyebrow: 'AN EVENING JUST FOR US',
+    eyebrow: 'AN AFTERNOON INTO EVENING',
     title: 'Our Little Adventure Awaits',
-    subtitle: 'One special evening, a table for two, and a beautiful view.',
-    note: 'Our anniversary dinner is booked for 6:00 PM. Just you, me, and a beautiful evening together.',
+    subtitle: 'Art to wander through, then a table for two above the city.',
+    note: 'A little art at 4:00 PM, then our anniversary dinner at 6:00 PM. Two beautiful stops, one special day with you.',
     mapsLabel: 'Find our way',
     entries: [
       {
-        id: 'evening', period: 'Evening', time: '6:00 PM',
+        id: 'art-lounge', kind: 'gallery', period: 'Afternoon', time: '4:00 PM',
+        place: 'Art Lounge Manila – Molito · Alabang',
+        title: 'An Afternoon of Art Together',
+        description: "Let's wander through the art at Art Lounge Manila – Molito. A little time for colors, conversation, and discovering our favorite pieces together before dinner.",
+        icon: 'compass',
+        gallery: [
+          {
+            src: '/images/venues/art-lounge-molito-gallery.webp',
+            alt: 'Paintings and sculptures inside Art Lounge Manila at Molito, Alabang',
+            caption: 'A little art, a little us',
+            sourceUrl: 'https://molito.com.ph/retail_store/art-lounge-manila/',
+            sourceLabel: 'Photo: Molito Lifestyle Center',
+          },
+          {
+            src: '/images/venues/art-lounge-molito-interior.webp',
+            alt: 'A blue sculpture and colorful artworks displayed inside Art Lounge Manila at Molito',
+            caption: 'Our next little discovery',
+            sourceUrl: 'https://www.spot.ph/arts-culture/the-latest-arts-culture/106068/art-galleries-south-metro-manila-las-pinas-muntinlupa-paranaque-pasay-a3412-20230826-lfrm',
+            sourceLabel: 'Photo: Bea Faicol / SPOT.ph',
+          },
+        ],
+        image: {
+          src: '/images/venues/art-lounge-molito-gallery.webp',
+          alt: 'Paintings and sculptures inside Art Lounge Manila at Molito, Alabang',
+          emailSrc: 'https://molito.com.ph/wp-content/uploads/2024/02/450417903_880836077398344_6547567029027838849_n.jpg',
+          sourceUrl: 'https://molito.com.ph/retail_store/art-lounge-manila/',
+          sourceLabel: 'Photo: Molito Lifestyle Center',
+        },
+        mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Art+Lounge+Manila+Molito+Alabang',
+      },
+      {
+        id: 'evening', kind: 'dinner', period: 'Evening', time: '6:00 PM',
         place: 'The Nest Dining in the Sky · Vivere Hotel, Alabang',
         title: 'Anniversary Dinner in the Sky',
         description: "I've booked our anniversary dinner at The Nest Dining in the Sky for 6:00 PM. A special table for two, good food, and another beautiful memory with you.",

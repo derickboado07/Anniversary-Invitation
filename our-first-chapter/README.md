@@ -98,7 +98,9 @@ Edit **`itinerary.entries`** in the same data file. Every entry has:
 }
 ```
 
-Icons available: `sunrise`, `utensils`, `compass`, and `moon`. Leave `mapsUrl` absent until you have a real Google Maps link. The Maps button only appears for a valid configured Maps URL. The itinerary contains only the booked **6:00 PM anniversary dinner at The Nest Dining in the Sky, Vivere Hotel, Alabang, on November 22, 2026**, with its Maps search link. Its `dressCode` is the requested attire for the couple's evening: a dress, formal attire, or smart semi-formal attire. The venue photo comes from [Vivere Hotel's official website](https://viverehotel.com.ph/stories/the-nest-rooftop-dining-alabang-manila/), with a credited local copy in `public/images/venues/`. Edit the entry's `image` fields to replace the photo or its credit.
+Icons available: `sunrise`, `utensils`, `compass`, and `moon`. Leave `mapsUrl` absent until you have a real Google Maps link. The Maps button only appears for a valid configured Maps URL. The itinerary begins with **Art Lounge Manila – Molito, Alabang, at 4:00 PM**, followed by the booked **6:00 PM anniversary dinner at The Nest Dining in the Sky, Vivere Hotel, Alabang, on November 22, 2026**. Both stops include Maps search links. The dinner's `dressCode` is the requested attire for the couple's evening: a dress, formal attire, or smart semi-formal attire. Its email venue photo comes from [Vivere Hotel's official website](https://viverehotel.com.ph/stories/the-nest-rooftop-dining-alabang-manila/), with a credited local copy in `public/images/venues/`. Edit each entry's `image` fields to replace its email photo or credit.
+
+The art stop uses `kind: 'gallery'` and two `gallery` photos displayed as overlapping framed prints. Its image sources are recorded in [Art Lounge photo credits](./docs/art-lounge-photos.md).
 
 After changing the plan, run `npm run email:preview` to regenerate `email/email-preview.txt`, `email/email-preview.html`, `email/email-preview.png`, and `email/email-preview-mobile.png` from the same itinerary. Preview generation does not send an email.
 
@@ -169,7 +171,7 @@ An explicit `/?reset=1` URL also resets the invitation once in the browser where
 
 The email implementation and HTML template are ready; delivery requires connecting your own sender and configuring a fixed recipient in EmailJS. Follow [EMAIL_SETUP.md](./EMAIL_SETUP.md) and copy `.env.example` to an ignored `.env.local`. Do not put email passwords or private keys in the website.
 
-Once configured in production, clicking Yes saves the answer and requests one itinerary email to the template's recipient. The email and the **Save our itinerary** text download use the same central data, including the single dinner booking, dress code, and venue photo reference. The sent HTML email uses the photo's public HTTPS `emailSrc`, while local previews embed the local image so they work offline. Edit `email` and `itinerary.entries` in `src/data/anniversary.ts` before sharing.
+Once configured in production, clicking Yes saves the answer and requests one itinerary email to the template's recipient. The email and the **Save our itinerary** text download use the same central data, including the 4:00 PM art visit, 6:00 PM dinner booking, dress code, and both venue photo references. The sent HTML email uses each photo's public HTTPS `emailSrc`, while local previews embed the local images so they work offline. Edit `email` and `itinerary.entries` in `src/data/anniversary.ts` before sharing.
 
 Local rehearsals do not send by default, even when public EmailJS IDs are set. A deliberate development send requires `VITE_EMAIL_SEND_IN_PREVIEW=true`. The accepted state accurately distinguishes preview, pending, acknowledged, unavailable, and uncertain delivery. Refreshing an accepted invitation does not automatically request another copy. A lost response asks the visitor to check their inbox before manually retrying.
 

@@ -11,6 +11,43 @@ async function showDinner(page: Page) {
   await page.locator('.venue-gallery-slide.is-active img').evaluate(image => (image as HTMLImageElement).decode())
 }
 
+test('the day starts with a 4 PM art visit and overlapping photos before the 6 PM dinner', async ({ page }) => {
+  await showDinner(page)
+  const stops = page.locator('#itinerary > article')
+  await expect(stops).toHaveCount(2)
+  const art = stops.nth(0)
+  await expect(art.getByRole('heading', { name: 'An Afternoon of Art Together' })).toBeVisible()
+  await expect(art.locator('.art-lounge-place')).toHaveText('Art Lounge Manila – Molito · Alabang')
+  await expect(art.locator('.art-lounge-time strong')).toHaveText('4:00 PM')
+  await expect(art.getByRole('link', { name: /Find our way/ })).toHaveAttribute('href', /Art\+Lounge\+Manila\+Molito\+Alabang/)
+  await expect(stops.nth(1).getByRole('heading', { name: 'Anniversary Dinner in the Sky' })).toBeVisible()
+  await expect(stops.nth(1).locator('.dining-ticket-details')).toContainText('6:00 PM')
+  await expect(page.locator('.dining-ticket-status')).toHaveCount(1)
+
+  for (const width of [320, 390, 768, 1280]) {
+    await page.setViewportSize({ width, height: 900 })
+    await art.locator('.museum-photo-stack').scrollIntoViewIfNeeded()
+    await expect(art.locator('.museum-photo img')).toHaveCount(2)
+    const geometry = await art.evaluate(async element => {
+      const images = [...element.querySelectorAll<HTMLImageElement>('.museum-photo img')]
+      await Promise.all(images.map(image => image.decode()))
+      const boxes = [...element.querySelectorAll('.museum-photo')].map(frame => frame.getBoundingClientRect())
+      const overlapWidth = Math.max(0, Math.min(boxes[0].right, boxes[1].right) - Math.max(boxes[0].left, boxes[1].left))
+      const overlapHeight = Math.max(0, Math.min(boxes[0].bottom, boxes[1].bottom) - Math.max(boxes[0].top, boxes[1].top))
+      return {
+        loaded: images.every(image => image.naturalWidth > 0),
+        overlap: overlapWidth * overlapHeight / Math.min(...boxes.map(box => box.width * box.height)),
+        contained: boxes.every(box => box.left >= 0 && box.right <= innerWidth),
+        overflow: document.documentElement.scrollWidth > innerWidth + 1,
+      }
+    })
+    expect(geometry.loaded).toBeTruthy()
+    expect(geometry.overlap).toBeGreaterThan(.15)
+    expect(geometry.contained).toBeTruthy()
+    expect(geometry.overflow).toBeFalsy()
+  }
+})
+
 test('venue photos stay still with reduced motion and all three attire examples are available', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await showDinner(page)
