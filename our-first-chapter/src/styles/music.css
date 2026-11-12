@@ -1,0 +1,17 @@
+.background-music{position:fixed;right:24px;bottom:calc(22px + env(safe-area-inset-bottom,0px));z-index:18;max-width:calc(100vw - 32px);color:#6b2235}
+.music-toggle{display:flex;align-items:center;gap:11px;min-height:58px;max-width:100%;padding:9px 17px 9px 10px;border:1px solid #d9b8bb;border-radius:40px;background:#fff9f4f2;color:#6b2235;box-shadow:0 6px 30px #301a2512;backdrop-filter:blur(14px);text-align:left;transition:background .2s,box-shadow .2s}
+.music-toggle:hover{background:#fcebf0;box-shadow:0 7px 30px #6b223522}
+.music-toggle-icon{display:grid;place-items:center;flex-shrink:0;width:35px;height:35px;border-radius:50%;background:#6b2235;color:#fff9f4}
+.music-toggle-icon svg{stroke-width:1.3}
+.music-toggle-copy{display:flex;min-width:0;flex-direction:column;gap:4px}
+.music-track{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;font-weight:500;letter-spacing:.01em;line-height:1.3}
+.music-action{display:block;font-size:9px;color:#87636c;line-height:1.3}
+.music-bars{display:flex;align-items:center;gap:2px;height:18px;margin-left:3px;flex-shrink:0}
+.music-bars i{display:block;width:2px;height:13px;border-radius:2px;background:#b3828b;transform:scaleY(.25)}
+.music-bars i:nth-child(2){height:19px}.music-bars i:nth-child(3){height:16px}.music-bars i:nth-child(4){height:11px}
+.music-bars.is-playing i{animation:soundtrack-wave 1s ease-in-out infinite alternate;transform:scaleY(.5)}
+.music-bars.is-playing i:nth-child(2){animation-delay:-.65s}.music-bars.is-playing i:nth-child(3){animation-delay:-.35s}.music-bars.is-playing i:nth-child(4){animation-delay:-.8s}
+.music-feedback:empty{display:none}.music-feedback:not(:empty){max-width:245px;padding:11px 15px;margin:0 0 10px auto;background:#fff9f4;border:1px solid #e4c6ca;border-radius:12px;font-size:11px;line-height:1.6;box-shadow:0 5px 22px #301a2512}
+@keyframes soundtrack-wave{from{transform:scaleY(.3)}to{transform:scaleY(1)}}
+@media(max-width:600px){.background-music{right:16px;bottom:calc(14px + env(safe-area-inset-bottom,0px))}.music-toggle{gap:9px;min-height:54px;padding:8px 13px 8px 8px}.music-toggle-icon{width:33px;height:33px}.music-track{font-size:9px}.music-action{font-size:8px}}
+@media(prefers-reduced-motion:reduce){.music-toggle{transition:none}.music-bars.is-playing i{animation:none;transform:scaleY(.7)}}

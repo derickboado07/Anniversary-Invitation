@@ -1,0 +1,50 @@
+{
+  "name": "our-first-chapter",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc -b && vite build",
+    "typecheck": "tsc -b --pretty false",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "playwright test",
+    "test:email": "playwright test --config playwright.email.config.ts",
+    "email:preview": "node scripts/preview-email.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/newsreader": "https://registry.npmjs.org/@fontsource-variable/newsreader/-/newsreader-5.3.0.tgz",
+    "@fontsource-variable/ibm-plex-sans": "https://registry.npmjs.org/@fontsource-variable/ibm-plex-sans/-/ibm-plex-sans-5.3.0.tgz",
+    "@tailwindcss/vite": "4.3.0",
+    "lucide-react": "https://registry.npmjs.org/lucide-react/-/lucide-react-1.27.0.tgz",
+    "motion": "https://registry.npmjs.org/motion/-/motion-12.43.0.tgz",
+    "react": "https://registry.npmjs.org/react/-/react-19.2.8.tgz",
+    "react-dom": "https://registry.npmjs.org/react-dom/-/react-dom-19.2.8.tgz",
+    "tailwindcss": "4.3.0"
+  },
+  "optionalDependencies": {
+    "@rolldown/binding-win32-x64-msvc": "https://registry.npmjs.org/@rolldown/binding-win32-x64-msvc/-/binding-win32-x64-msvc-1.1.5.tgz"
+  },
+  "overrides": {
+    "framer-motion": "https://registry.npmjs.org/framer-motion/-/framer-motion-12.43.0.tgz",
+    "motion-dom": "https://registry.npmjs.org/motion-dom/-/motion-dom-12.43.0.tgz",
+    "motion-utils": "https://registry.npmjs.org/motion-utils/-/motion-utils-12.39.0.tgz",
+    "picomatch": "https://registry.npmjs.org/picomatch/-/picomatch-4.0.5.tgz",
+    "postcss": "https://registry.npmjs.org/postcss/-/postcss-8.5.23.tgz",
+    "tinyglobby": "https://registry.npmjs.org/tinyglobby/-/tinyglobby-0.2.17.tgz",
+    "rolldown": "https://registry.npmjs.org/rolldown/-/rolldown-1.1.5.tgz",
+    "@rolldown/pluginutils": "https://registry.npmjs.org/@rolldown/pluginutils/-/pluginutils-1.0.1.tgz",
+    "nanoid": "https://registry.npmjs.org/nanoid/-/nanoid-3.3.18.tgz",
+    "@oxc-project/types": "https://registry.npmjs.org/@oxc-project/types/-/types-0.139.0.tgz",
+    "jiti": "https://registry.npmjs.org/jiti/-/jiti-2.7.0.tgz"
+  },
+  "devDependencies": {
+    "playwright": "https://registry.npmjs.org/playwright/-/playwright-1.62.1.tgz",
+    "@types/node": "https://registry.npmjs.org/@types/node/-/node-24.13.3.tgz",
+    "@types/react": "https://registry.npmjs.org/@types/react/-/react-19.2.17.tgz",
+    "@types/react-dom": "https://registry.npmjs.org/@types/react-dom/-/react-dom-19.2.3.tgz",
+    "@vitejs/plugin-react": "https://registry.npmjs.org/@vitejs/plugin-react/-/plugin-react-6.0.4.tgz",
+    "typescript": "~5.9.3",
+    "vite": "https://registry.npmjs.org/vite/-/vite-8.1.5.tgz"
+  }
+}

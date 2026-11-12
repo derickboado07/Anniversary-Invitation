@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.env*
+!.env.example
+*.local
+test-results/
+email-test-results/
+playwright-report/
+.sites-local/
+.npm-cache/
+*.tsbuildinfo
+*.tar.gz
+/Background music/
+/Monthly Image/
+/email/email-preview*
+/.openai/
+/.asset-tools/

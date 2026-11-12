@@ -1,0 +1,44 @@
+.memories-section { position: relative; padding-top: 110px; padding-bottom: 100px; }
+.memories-intro { max-width: 760px; margin: 0 auto 74px; text-align: center; }
+.memories-intro .section-heading { margin: 20px auto 18px; max-width: 680px; }
+.memories-intro > p { max-width: 470px; margin: auto; line-height: 1.9; color: #806b6b; }
+.memories-flourish { display: flex; align-items: center; justify-content: center; gap: 17px; margin-top: 28px; color: #9c6470; }
+.memories-flourish i { display: block; height: 1px; width: 56px; background: #d8b8b6; }
+.memories-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 54px 46px; padding: 0 14px; }
+.memory-leaf { min-width: 0; }
+.memory-frame { display: block; width: 100%; padding: 12px 12px 0; position: relative; border: 1px solid #eadfd5; background: #fffdf8; color: #6b2235; box-shadow: 0 6px 18px #6b22350b, 0 2px 5px #301a2505; transform: rotate(var(--frame-angle)); transition: transform .35s ease, box-shadow .35s ease; cursor: pointer; text-align: left; border-radius: 2px; }
+.memory-frame:hover, .memory-frame:focus-visible { transform: translateY(-7px) rotate(0); box-shadow: 0 17px 30px #6b223514; }
+.memory-frame:focus-visible { outline: 2px solid #6b2235; outline-offset: 6px; }
+.memory-tape { width: 72px; height: 26px; top: -13px; left: calc(50% - 36px); position: absolute; z-index: 2; transform: rotate(-6deg); background: #e4caa1a6; clip-path: polygon(3% 0, 98% 5%, 95% 25%,100% 44%,96% 65%,99% 100%,2% 95%,5% 75%,0 55%,4% 32%); opacity: .8; }
+.memory-photo { aspect-ratio: 4 / 4.5; position: relative; overflow: hidden; background: var(--memory-bg); }
+.memory-photo > img { position: absolute; inset: 0; height: 100%; width: 100%; object-fit: cover; opacity: 0; transition: opacity .4s ease; }
+.memory-photo.has-photo > img { opacity: 1; }
+.memory-placeholder { position: absolute; inset: 0; display: flex; align-items: center; flex-direction: column; justify-content: center; color: var(--memory-ink); background: radial-gradient(ellipse at 20% 0,#fff9f455,transparent 65%),linear-gradient(135deg,transparent,#fff9f422); }
+.memory-placeholder::after { content: ''; position: absolute; inset: 0; opacity: .18; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 150 150' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.35' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.memory-placeholder-month { font-size: 10px; letter-spacing: .24em; position: absolute; top: 21px; left: 0; right: 0; text-align: center; }
+.memory-placeholder-month > span { opacity: .65; margin-left: 6px; }
+.memory-artwork { height: 95%; width: 90%; position: absolute; bottom: 4%; }
+.memory-placeholder-note { font-size: 10px; letter-spacing: .07em; position: absolute; bottom: 17px; text-align: center; }
+.memory-frame-bottom { min-height: 66px; display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.memory-month { font-size: 27px; line-height: 1; }
+.memory-month > span { font-size: 18px; color: #a88b89; margin-left: 2px; }
+.memory-page { font-size: 10px; color: #b1958d; letter-spacing: .1em; }
+.memory-caption { text-align: center; font-size: 11px; color: #8d7773; margin: 21px 0 0; line-height: 1.7; }
+.memory-expand { display: grid; place-items: center; background: #fff9f4dc; color: #6b2235; position: absolute; right: 23px; bottom: 77px; border-radius: 50%; width: 33px; height: 33px; opacity: 0; transform: translateY(5px); transition: .3s; }
+.memory-frame:hover .memory-expand,.memory-frame:focus-visible .memory-expand { opacity: 1; transform: translateY(0); }
+.memories-hint { text-align: center; font-size: 24px; color: #a07877; margin: 65px auto 0; }
+.memory-dialog { border: 0; padding: 0; border-radius: 4px; width: min(500px,calc(100vw - 32px)); max-width: none; max-height: calc(100dvh - 32px); overflow-y: auto; background: #fff9f4; color: #6b2235; box-shadow: 0 24px 80px #301a2544; margin: auto; overscroll-behavior: contain; }
+.memory-dialog::backdrop { background: #301a25c9; backdrop-filter: blur(7px); }
+.memory-dialog-paper { padding: 12px 20px 18px; }
+.memory-dialog-top { display: flex; justify-content: space-between; align-items: center; margin: 0 0 10px; }
+.memory-dialog .memory-photo { max-height: 58dvh; aspect-ratio: 4 / 4.5; }
+.memory-icon-button { display: inline-grid; place-items: center; width: 44px; height: 44px; background: transparent; border: 1px solid #d6b9b566; border-radius: 50%; color: #6b2235; cursor: pointer; transition: background .2s; }
+.memory-icon-button:hover { background: #f7dde4; }
+.memory-icon-button:focus-visible { outline: 2px solid #6b2235; outline-offset: 3px; }
+.memory-dialog-caption { text-align: center; padding: 16px 8px 8px; }
+.memory-dialog-caption h3 { font-size: 32px; margin: 0 0 5px; font-weight: 400; }
+.memory-dialog-caption p { font-size: 12px; color: #806b6b; margin: 0; line-height: 1.7; }
+.memory-dialog-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; }
+@media (max-width: 900px) { .memories-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 48px 36px; } .memory-month { font-size: 29px; } }
+@media (max-width: 600px) { .memories-section { padding-top: 78px; padding-bottom: 72px; } .memories-intro { margin-bottom: 53px; } .memories-intro > p { font-size: 13px; } .memories-grid { grid-template-columns: minmax(0,1fr); max-width: 350px; margin: 0 auto; gap: 41px; padding: 0 14px; } .memory-frame { padding: 11px 11px 0; } .memory-frame-bottom { min-height: 65px; } .memory-month { font-size: 30px; } .memory-caption { font-size: 11px; margin-top: 20px; } .memory-expand { opacity: 1; transform: none; width: 30px; height: 30px; } .memories-hint { font-size: 22px; max-width: 270px; line-height: 1.5; margin-top: 48px; } .memory-dialog-paper { padding: 9px 14px 14px; } }
+@media (prefers-reduced-motion: reduce) { .memory-frame,.memory-expand,.memory-photo > img,.memory-icon-button { transition: none; } .memory-frame:hover,.memory-frame:focus-visible { transform: rotate(var(--frame-angle)); } }

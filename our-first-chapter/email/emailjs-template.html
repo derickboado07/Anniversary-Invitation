@@ -1,0 +1,113 @@
+<!-- Paste this complete file into the EmailJS HTML editor. Content comes from the website's central configuration. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <title>{{email_subject}}</title>
+    <style>
+      table,td { mso-table-lspace:0pt; mso-table-rspace:0pt; }
+      @media screen and (max-width:480px) {
+        .email-gutter { padding:16px 10px !important; }
+        .email-header { padding:34px 20px 30px !important; }
+        .email-pad { padding-left:20px !important; padding-right:20px !important; }
+        .email-heading { font-size:36px !important; }
+        .email-stop { padding:18px !important; }
+      }
+    </style>
+  </head>
+  <body style="margin:0;padding:0;width:100%;background-color:#FFF9F4;color:#301A25;font-family:'DM Sans','IBM Plex Sans',Arial,sans-serif;-webkit-text-size-adjust:100%;">
+    <div aria-hidden="true" style="display:none!important;visibility:hidden;mso-hide:all;overflow:hidden;max-height:0;max-width:0;opacity:0;color:transparent;font-size:1px;line-height:1px;">{{celebration_date}} · {{thank_you}}</div>
+    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#FFF9F4" style="width:100%;background-color:#FFF9F4;border-collapse:collapse;">
+      <tr>
+        <td class="email-gutter" align="center" style="padding:32px 16px;">
+          <!--[if mso]><table role="presentation" cellpadding="0" cellspacing="0" border="0" width="580" align="center"><tr><td><![endif]-->
+          <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#FFFDF9" style="width:100%;max-width:580px;border:1px solid #E7C99A;border-top:3px solid #E7C99A;border-radius:8px;background-color:#FFFDF9;border-spacing:0;">
+            <tr>
+              <td class="email-header" align="center" bgcolor="#6B2235" style="padding:38px 28px 34px;background-color:#6B2235;border-radius:6px 6px 0 0;">
+                <p style="margin:0 0 18px;color:#E7C99A;font-size:9px;font-weight:normal;letter-spacing:3px;line-height:1.8;">{{email_eyebrow}}</p>
+                <p style="margin:0 0 15px;color:#F7DDE4;font-family:'Cormorant Garamond','Newsreader',Georgia,serif;font-size:22px;font-style:italic;line-height:1.3;">{{from_name}} &amp; {{to_name}}</p>
+                <h1 class="email-heading" style="margin:0;color:#FFF9F4;font-family:'Cormorant Garamond','Newsreader',Georgia,serif;font-size:42px;font-weight:normal;letter-spacing:-1px;line-height:1.15;">{{email_heading}}</h1>
+                <p aria-hidden="true" style="margin:20px 0 0;color:#E7C99A;font-family:Georgia,serif;font-size:23px;line-height:1;">&#9825;</p>
+              </td>
+            </tr>
+            <tr>
+              <td class="email-pad" style="padding:32px 28px 24px;">
+                <p style="margin:0 0 18px;color:#6B2235;font-family:'Cormorant Garamond','Newsreader',Georgia,serif;font-size:27px;font-weight:normal;line-height:1.35;">{{greeting}}</p>
+                <p style="margin:0 0 14px;color:#5F4853;font-size:14px;line-height:1.9;white-space:pre-line;">{{thank_you}}</p>
+                <p style="margin:0;color:#77545F;font-size:14px;line-height:1.9;white-space:pre-line;">{{intro}}</p>
+              </td>
+            </tr>
+            <tr>
+              <td class="email-pad" style="padding:0 28px 32px;">
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#F7DDE4" style="width:100%;border:1px solid #E4C0C7;border-radius:6px;background-color:#F7DDE4;">
+                  <tr>
+                    <td align="center" style="padding:23px 18px;">
+                      <p style="margin:0 0 9px;color:#813B4B;font-size:9px;letter-spacing:2px;line-height:1.8;">{{date_label}}</p>
+                      <p style="margin:0;color:#6B2235;font-family:'Cormorant Garamond','Newsreader',Georgia,serif;font-size:24px;line-height:1.45;">{{celebration_date}}</p>
+                      <p style="margin:9px 0 0;color:#77545F;font-size:11px;line-height:1.7;">{{occasion_label}}</p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td class="email-pad" align="center" style="padding:0 28px 23px;">
+                <p style="margin:0 0 10px;color:#813B4B;font-size:9px;letter-spacing:2px;line-height:1.8;">{{itinerary_eyebrow}}</p>
+                <h2 style="margin:0;color:#6B2235;font-family:'Cormorant Garamond','Newsreader',Georgia,serif;font-size:30px;font-weight:normal;letter-spacing:-.5px;line-height:1.2;">{{itinerary_heading}}</h2>
+                {{#planning_note}}
+                <p style="margin:13px 0 0;color:#77545F;font-family:Georgia,serif;font-size:14px;font-style:italic;line-height:1.8;">{{planning_note}}</p>
+                {{/planning_note}}
+              </td>
+            </tr>
+            {{#itinerary}}
+            <tr>
+              <td class="email-pad" style="padding:0 28px 14px;">
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" bgcolor="#FFF9F4" style="width:100%;border:1px solid #E8D4CB;border-radius:5px;background-color:#FFF9F4;">
+                  <tr>
+                    <td class="email-stop" style="padding:21px;">
+                      <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;border-collapse:collapse;">
+                        <tr>
+                          <td width="34" valign="top" style="width:34px;padding:0 10px 0 0;">
+                            <p style="margin:0;width:27px;border:1px solid #D9B5A6;border-radius:50%;color:#813B4B;text-align:center;font-family:Georgia,serif;font-size:12px;line-height:27px;">{{number}}</p>
+                          </td>
+                          <td valign="middle" style="padding:0;">
+                            <p style="margin:0;color:#813B4B;font-size:11px;letter-spacing:.5px;line-height:1.8;">{{period}} · {{time}}</p>
+                          </td>
+                        </tr>
+                      </table>
+                      <h3 style="margin:15px 0 9px;color:#6B2235;font-family:'Cormorant Garamond','Newsreader',Georgia,serif;font-size:26px;font-weight:normal;letter-spacing:-.3px;line-height:1.25;">{{title}}</h3>
+                      <p style="margin:0 0 10px;color:#77545F;font-size:12px;line-height:1.8;">{{place}}</p>
+                      <p style="margin:0;color:#5F4853;font-size:14px;line-height:1.8;white-space:pre-line;">{{description}}</p>
+                      {{#maps_url}}
+                      <p style="margin:15px 0 0;font-size:12px;line-height:1.8;"><a href="{{maps_url}}" target="_blank" rel="noopener noreferrer" style="display:inline-block;padding:6px 0;color:#6B2235;text-decoration:underline;text-underline-offset:3px;">{{maps_label}}</a></p>
+                      {{/maps_url}}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            {{/itinerary}}
+            <tr>
+              <td class="email-pad" style="padding:19px 28px 31px;">
+                <p style="margin:0 0 23px;color:#5F4853;font-size:14px;line-height:1.9;white-space:pre-line;">{{closing}}</p>
+                <p style="margin:0;color:#6B2235;font-family:'Cormorant Garamond','Newsreader',Georgia,serif;font-size:27px;font-style:italic;line-height:1.5;white-space:pre-line;">{{signature}}</p>
+                {{#site_url}}
+                <p style="margin:24px 0 0;font-size:12px;line-height:1.8;"><a href="{{site_url}}" target="_blank" rel="noopener noreferrer" style="display:inline-block;padding:9px 0;color:#6B2235;text-decoration:underline;">{{return_label}}</a></p>
+                {{/site_url}}
+              </td>
+            </tr>
+            <tr>
+              <td class="email-pad" align="center" style="padding:21px 28px 24px;border-top:1px solid #E8D4CB;">
+                <p aria-hidden="true" style="margin:0 0 11px;color:#A86F7D;font-family:Georgia,serif;font-size:21px;line-height:1;">&#9825;</p>
+                <p style="margin:0;color:#77545F;font-family:Georgia,serif;font-size:13px;font-style:italic;line-height:1.8;">{{footer_note}}</p>
+              </td>
+            </tr>
+          </table>
+          <!--[if mso]></td></tr></table><![endif]-->
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
