@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'motion/react'
 import { ArrowUpRight, Heart } from 'lucide-react'
 import { anniversary as data } from '../data/anniversary'
 import { Rose } from './Rose'
+import { DuduBubu } from './DuduBubu'
 
 export function EnvelopeIntro({ onOpen }: { onOpen: () => void }) {
   const dialog = useRef<HTMLDialogElement>(null)
@@ -29,6 +30,7 @@ export function EnvelopeIntro({ onOpen }: { onOpen: () => void }) {
         <div className="envelope-flap"/>
         <div className="wax-seal"><Heart size={24} strokeWidth={1.1}/></div>
         <span className="envelope-address handwritten">{data.names.recipient}</span>
+        <div className="envelope-bears"><DuduBubu pose="letter"/></div>
       </div>
       <h1 id="opening-title">{data.opening.title}</h1>
       <p className="opening-subtitle">{data.opening.subtitle}</p>

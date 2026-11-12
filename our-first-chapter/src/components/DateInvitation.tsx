@@ -8,6 +8,8 @@ import { createEscapeDeck } from '../lib/noButton'
 import type { EscapeSpot } from '../lib/noButton'
 import type { ItineraryEmailStatus } from '../lib/itineraryEmail'
 import { InvitationEmail } from './InvitationEmail'
+import { DuduBubu } from './DuduBubu'
+import { DuduBubuImage } from './DuduBubuImage'
 import '../styles/invitation.css'
 
 interface DateInvitationProps { accepted: boolean; onAccept: () => void; acceptanceSaved?: boolean; emailStatus?: ItineraryEmailStatus; onRetryEmail?: () => void }
@@ -126,7 +128,7 @@ export function DateInvitation({ accepted, onAccept, acceptanceSaved = true, ema
         <span className="invitation-corner invitation-corner-tl" aria-hidden="true" />
         <span className="invitation-corner invitation-corner-br" aria-hidden="true" />
         <p className="eyebrow">{content.eyebrow}</p>
-        <div className="invitation-emblem" aria-hidden="true"><Heart size={22} strokeWidth={1.2} /></div>
+        <div className="invitation-bears">{accepted ? <DuduBubu pose="celebrate"/> : <DuduBubuImage scene="hearts"/>}</div>
         <AnimatePresence mode="wait" initial={false}>
           {accepted ? (
             <motion.div key="accepted" className="invitation-state invitation-accepted" initial={reducedMotion ? false : { opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>

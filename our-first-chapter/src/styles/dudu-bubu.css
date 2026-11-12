@@ -1,0 +1,49 @@
+.dudu-bubu-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+}
+
+.dudu-bubu {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  pointer-events: none;
+  filter: drop-shadow(0 3px 0 #fffaf0) drop-shadow(0 -3px 0 #fffaf0) drop-shadow(3px 0 0 #fffaf0) drop-shadow(-3px 0 0 #fffaf0);
+}
+
+.dudu-bubu-heart {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: bear-heart-float 4.5s ease-in-out infinite;
+}
+
+.dudu-bubu-heart-late {
+  animation-delay: -2.2s;
+}
+
+.dudu-bubu-wave {
+  transform-box: fill-box;
+  transform-origin: bottom right;
+  animation: bear-little-wave 4.5s ease-in-out infinite;
+}
+
+@keyframes bear-heart-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -4px; }
+}
+
+@keyframes bear-little-wave {
+  0%, 72%, 100% { rotate: 0deg; }
+  80% { rotate: -6deg; }
+  88% { rotate: 3deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dudu-bubu-heart,
+  .dudu-bubu-wave {
+    animation: none;
+  }
+}

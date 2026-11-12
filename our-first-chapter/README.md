@@ -98,6 +98,10 @@ Edit **`itinerary.entries`** in the same data file. Every entry has:
 
 Icons available: `sunrise`, `utensils`, `compass`, and `moon`. Leave `mapsUrl` absent until you have a real Google Maps link. The Maps button only appears for a valid configured Maps URL. The initial entries are editable ideas, not confirmed venues, reservations, or precise times.
 
+## Dudu and Bubu artwork
+
+The two supplied illustrations from `Monthly Image/` are displayed separately: the standing pair beside the hero photo, and the bucket-hat pair holding hearts on the date invitation. Their website copies are in `public/images/dudu-bubu/`; replace those copies to change the artwork. The opening envelope, accepted invitation, and footer each use a different vector pose in `src/components/DuduBubu.tsx`. Placement and mobile sizing live in `src/styles/bear-placements.css`.
+
 ## Gift exchange and music
 
 Edit **`gift`** to change the gift note, paragraphs, P.S., or tiny surprise message. Set `gift.enabled` to `false` to hide the entire section.

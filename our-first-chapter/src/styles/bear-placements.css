@@ -1,0 +1,77 @@
+/* Little companions tucked into the letter and its pages. */
+.envelope-bears,
+.hero-bears,
+.invitation-bears,
+.footer-bears {
+  pointer-events: none;
+  user-select: none;
+}
+
+.envelope-bears {
+  position: absolute;
+  z-index: 6;
+  width: 166px;
+  left: -45px;
+  bottom: -25px;
+  transform: rotate(-8deg);
+}
+
+.hero-art { padding-bottom: 140px; }
+.hero-art .back-paper { bottom: 117px; }
+.hero-art .hero-orbit { bottom: 125px; }
+.hero-art .anniversary-stamp { bottom: 112px; }
+
+.hero-bears {
+  position: absolute;
+  width: 148px;
+  left: 12px;
+  bottom: 8px;
+  padding: 5px;
+  border: 1px solid #e5c7c5;
+  border-radius: 8px;
+  background: #fffdf8;
+  transform: rotate(-8deg);
+  box-shadow: 0 5px 16px #6b223515;
+}
+
+.hero-bears .dudu-bubu-image {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center 60%;
+  border-radius: 4px;
+}
+
+.invitation-bears {
+  width: 176px;
+  aspect-ratio: 4 / 3;
+  margin: 10px auto 12px;
+}
+
+.invitation-bears .dudu-bubu-image {
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid #6b223518;
+  border-radius: 50%;
+}
+
+.footer-bears {
+  width: 170px;
+  margin: -12px auto 17px;
+}
+
+@media (max-width: 760px) {
+  .hero-art .back-paper { bottom: 119px; }
+  .hero-art .hero-orbit { bottom: 117px; }
+  .hero-art .anniversary-stamp { bottom: 122px; }
+}
+
+@media (max-width: 480px) {
+  .envelope-bears { width: 136px; left: -18px; bottom: -22px; }
+  .hero-art { padding-bottom: 116px; }
+  .hero-art .back-paper { bottom: 96px; }
+  .hero-art .hero-orbit { bottom: 94px; }
+  .hero-art .anniversary-stamp { bottom: 103px; }
+  .hero-bears { width: 124px; left: 6px; bottom: 4px; }
+  .invitation-bears { width: 160px; margin: 8px auto 12px; }
+  .footer-bears { width: 150px; margin-top: -8px; }
+}

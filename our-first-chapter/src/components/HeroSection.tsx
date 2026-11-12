@@ -4,6 +4,7 @@ import { ArrowDown, ArrowUpRight, Heart, Sparkles } from 'lucide-react'
 import { anniversary as data } from '../data/anniversary'
 import { hasImage } from '../lib/images'
 import { Rose } from './Rose'
+import { DuduBubuImage } from './DuduBubuImage'
 
 export function HeroSection() {
   const reduced = useReducedMotion()
@@ -33,6 +34,7 @@ export function HeroSection() {
         </div>
         <figcaption className="handwritten">{data.hero.photoNote}<Heart size={16}/></figcaption>
       </figure>
+      <div className="hero-bears"><DuduBubuImage scene="together"/></div>
       <div className="anniversary-stamp"><span>{day}</span><span>{month.toUpperCase()} · {data.anniversaryDate.slice(0,4)}</span><Heart size={12}/></div>
       <p className="hero-side-note" aria-hidden="true">{data.hero.occasion} <Sparkles size={12}/></p>
     </motion.div>
